@@ -125,12 +125,13 @@ body {
   gap: 16px;
 }
 
-/* KPI cards column — left */
-.kpi-cards-col {
+/* KPI cards row — горизонтально */
+.kpi-cards-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 16px;
   flex: 1;
+  align-items: stretch;
 }
 
 .kpi-card {
@@ -214,31 +215,8 @@ body {
   gap: 2px;
 }
 
-.ring-icon { width: 18px; height: 18px; color: #a1a1aa; stroke: #a1a1aa; margin-bottom: 2px; }
-.ring-value { font-size: 2rem; font-weight: 700; color: #09090b; line-height: 1; font-variant-numeric: tabular-nums; }
-.ring-label { font-size: 0.7rem; color: #71717a; font-weight: 500; }
-
-/* Ring legend */
-.ring-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
-  color: #71717a;
-}
-
-.legend-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+.ring-icon-sm  { width: 14px; height: 14px; color: #a1a1aa; stroke: #a1a1aa; margin-bottom: 4px; }
+.ring-value-sm { font-size: 1.5rem; font-weight: 700; color: #09090b; line-height: 1; font-variant-numeric: tabular-nums; }
 
 /* ── Card ── */
 .card {
