@@ -239,23 +239,101 @@ function renderKPI() {
   }, 0));
   document.getElementById('kpiKcal').textContent = kcal.toLocaleString();
 
-  // Ring center — total workouts
+  // Ring center
   document.getElementById('ringCenterValue').textContent = sessions.length;
 
-  // Outer — Kcal, goal 3000, r=84, C=528
-  setRing('ringKcal', kcal, 3000, 528);
-  // Middle — Workouts/week, goal 5, r=62, C=390
-  setRing('ringWeek', weekCount, 5, 390);
-  // Inner — Time trained, goal 300 min, r=40, C=251
-  setRing('ringTime', totalMin, 300, 251);
+  // Segmented ring — single ring r=90, C=565.5, gap=14
+  renderSegmentedRing(kcal, 3000, weekCount, 5, totalMin, 300);
+
+  // Bar chart — weekly kcal
+  renderBarChart();
 }
 
-function setRing(id, value, goal, circumference) {
-  const pct      = Math.min(value / goal, 1);
-  const filled   = pct * circumference;
-  const gap      = circumference - filled;
-  document.getElementById(id).style.strokeDasharray = `${filled} ${gap + (circumference - filled)}`;
-  document.getElementById(id).setAttribute('stroke-dasharray', `${filled} ${circumference}`);
+// ─────────────────────────────────────────
+//  Segmented ring (single ring, 3 arcs)
+// ─────────────────────────────────────────
+function renderSegmentedRing(kcal, kcalGoal, week, weekGoal, mins, minsGoal) {
+  const C   = 2 * Math.PI * 90; // ≈ 565.5
+  const gap = 14;
+  const totalGaps = 3 * gap;
+  const available = C - totalGaps;
+
+  // Each segment proportional to % of goal (min 4% so it's visible)
+  const pcts = [
+    Math.max(Math.min(kcal  / kcalGoal,  1), 0),
+    Math.max(Math.min(week  / weekGoal,  1), 0),
+    Math.max(Math.min(mins  / minsGoal,  1), 0),
+  ];
+
+  // Total proportion sum → distribute available arc
+  const totalPct = pcts.reduce((a, b) => a + b, 0) || 1;
+  const segs = pcts.map(p => (p / totalPct) * available);
+
+  // Segments: [kcal=green, week=blue, time=purple]
+  const ids = ['segKcal', 'segWeek', 'segTime'];
+
+  let offset = 0;
+  ids.forEach((id, i) => {
+    const len  = segs[i];
+    const el   = document.getElementById(id);
+    if (!el) return;
+    // dasharray: show only this segment, hide rest
+    el.setAttribute('stroke-dasharray', `${len} ${C - len}`);
+    // dashoffset: shift start clockwise by offset (negative = forward)
+    el.setAttribute('stroke-dashoffset', -(offset));
+    offset += len + gap;
+  });
+}
+
+// ─────────────────────────────────────────
+//  Weekly bar chart
+// ─────────────────────────────────────────
+function renderBarChart() {
+  const days  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  const todayIdx = today.getDay();
+
+  // Build 7-day kcal data (past 7 days ending today)
+  const dayData = Array(7).fill(0);
+  sessions.forEach(s => {
+    const sDate = new Date(s.startTime);
+    const diffDays = Math.floor((today - sDate) / 86400000);
+    if (diffDays >= 0 && diffDays < 7) {
+      const idx = 6 - diffDays; // index 6 = today
+      const kcal = s.exercises.reduce((acc, e) =>
+        acc + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0) * 0.15, 0);
+      dayData[idx] += Math.round(kcal);
+    }
+  });
+
+  const maxVal   = Math.max(...dayData, 1);
+  const nonZero  = dayData.filter(v => v > 0);
+  const avgKcal  = nonZero.length ? Math.round(nonZero.reduce((a,b)=>a+b,0)/nonZero.length) : 0;
+
+  document.getElementById('barAvg').textContent = avgKcal ? `${avgKcal.toLocaleString()} kcal` : '—';
+
+  // Render bars
+  const barChart  = document.getElementById('barChart');
+  const barLabels = document.getElementById('barLabels');
+
+  // Day labels: last 7 days in order ending with today
+  const dayLabels = Array(7).fill(0).map((_, i) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() - (6 - i));
+    return days[d.getDay()];
+  });
+
+  barChart.innerHTML = dayData.map((val, i) => {
+    const isToday  = i === 6;
+    const hasData  = val > 0;
+    const heightPct = Math.max((val / maxVal) * 100, hasData ? 6 : 4);
+    const cls = isToday ? 'bar today' : hasData ? 'bar has-data' : 'bar';
+    return `<div class="bar-wrap"><div class="${cls}" style="height:${heightPct}%"></div></div>`;
+  }).join('');
+
+  barLabels.innerHTML = dayLabels.map((d, i) =>
+    `<div class="bar-day${i === 6 ? ' today' : ''}">${d}</div>`
+  ).join('');
 }
 
 // ─────────────────────────────────────────

@@ -51,11 +51,11 @@
 
   <div class="container page" id="page-home">
 
-    <!-- KPI Section -->
-    <section class="kpi-section">
+    <!-- KPI Dashboard -->
+    <section class="kpi-dashboard">
 
-      <!-- KPI cards in a row -->
-      <div class="kpi-cards-row">
+      <!-- Col 1: KPI cards stacked -->
+      <div class="kpi-cards-col">
         <div class="kpi-card">
           <div class="kpi-icon-wrap kpi-green">
             <i data-lucide="flame" class="kpi-svg"></i>
@@ -85,29 +85,39 @@
         </div>
       </div>
 
-      <!-- Ring chart -->
+      <!-- Col 2: Segmented ring -->
       <div class="ring-container card">
-        <div class="ring-wrapper">
-          <svg class="ring-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <!-- Outer — Kcal (green) r=84 C=528 -->
-            <circle class="ring-bg" cx="100" cy="100" r="84"/>
-            <circle class="ring-progress" id="ringKcal" cx="100" cy="100" r="84"
-              stroke="#4ade80" stroke-dasharray="0 528"/>
-            <!-- Middle — Workouts/week (blue) r=62 C=390 -->
-            <circle class="ring-bg" cx="100" cy="100" r="62"/>
-            <circle class="ring-progress" id="ringWeek" cx="100" cy="100" r="62"
-              stroke="#38bdf8" stroke-dasharray="0 390"/>
-            <!-- Inner — Time trained (purple) r=40 C=251 -->
-            <circle class="ring-bg" cx="100" cy="100" r="40"/>
-            <circle class="ring-progress" id="ringTime" cx="100" cy="100" r="40"
-              stroke="#a78bfa" stroke-dasharray="0 251"/>
-          </svg>
+        <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- BG track -->
+          <circle class="ring-track" cx="110" cy="110" r="90"/>
+          <!-- Segment 1 — Kcal (green) -->
+          <circle class="ring-seg" id="segKcal" cx="110" cy="110" r="90"
+            stroke="#4ade80" stroke-dasharray="0 565"/>
+          <!-- Segment 2 — Workouts (blue) -->
+          <circle class="ring-seg" id="segWeek" cx="110" cy="110" r="90"
+            stroke="#38bdf8" stroke-dasharray="0 565"/>
+          <!-- Segment 3 — Time (purple) -->
+          <circle class="ring-seg" id="segTime" cx="110" cy="110" r="90"
+            stroke="#a78bfa" stroke-dasharray="0 565"/>
+        </svg>
+        <div class="ring-center">
+          <i data-lucide="dumbbell" class="ring-icon-sm"></i>
+          <div class="ring-main-val" id="ringCenterValue">0</div>
+          <div class="ring-main-label">workouts</div>
+        </div>
+      </div>
 
-          <div class="ring-center">
-            <i data-lucide="dumbbell" class="ring-icon-sm"></i>
-            <div class="ring-value-sm" id="ringCenterValue">0</div>
+      <!-- Col 3: Weekly bar chart -->
+      <div class="bar-chart-card card">
+        <div class="bar-chart-header">
+          <span class="bar-chart-title">Weekly Kcal</span>
+          <div class="bar-chart-avg">
+            <span class="avg-label">Weekly avg</span>
+            <span class="avg-value" id="barAvg">0 kcal</span>
           </div>
         </div>
+        <div class="bar-chart" id="barChart"></div>
+        <div class="bar-labels" id="barLabels"></div>
       </div>
 
     </section>
