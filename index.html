@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
 
@@ -31,24 +32,44 @@
     <!-- 1. KPI Row -->
     <section class="kpi-row">
       <div class="kpi-card">
-        <div class="kpi-icon">🗓</div>
-        <div class="kpi-value" id="kpiWorkouts">0</div>
+        <div class="kpi-header">
+          <div class="kpi-icon-wrap kpi-purple">
+            <i data-lucide="calendar-days" class="kpi-svg"></i>
+          </div>
+          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        </div>
         <div class="kpi-label">Тренувань всього</div>
+        <div class="kpi-value" id="kpiWorkouts">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">🔁</div>
-        <div class="kpi-value" id="kpiSets">0</div>
+        <div class="kpi-header">
+          <div class="kpi-icon-wrap kpi-orange">
+            <i data-lucide="repeat-2" class="kpi-svg"></i>
+          </div>
+          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        </div>
         <div class="kpi-label">Підходів зроблено</div>
+        <div class="kpi-value" id="kpiSets">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">⚖️</div>
-        <div class="kpi-value" id="kpiWeight">0 кг</div>
+        <div class="kpi-header">
+          <div class="kpi-icon-wrap kpi-green">
+            <i data-lucide="weight" class="kpi-svg"></i>
+          </div>
+          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        </div>
         <div class="kpi-label">Загальний об'єм</div>
+        <div class="kpi-value" id="kpiWeight">0 кг</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">💪</div>
-        <div class="kpi-value" id="kpiToday">0</div>
+        <div class="kpi-header">
+          <div class="kpi-icon-wrap kpi-blue">
+            <i data-lucide="zap" class="kpi-svg"></i>
+          </div>
+          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        </div>
         <div class="kpi-label">Вправ сьогодні</div>
+        <div class="kpi-value" id="kpiToday">0</div>
       </div>
     </section>
 

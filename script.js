@@ -214,3 +214,4 @@ function tick() {
 
 // ── Init ──
 render();
+lucide.createIcons();
