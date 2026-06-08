@@ -356,9 +356,34 @@ function renderHistory() {
 
     return `
       <div class="history-card" data-session-id="${s.id}">
-        <!-- Top row: name + more -->
+        <!-- Top row: name only -->
         <div class="history-card-top">
           <div class="history-card-name">${title}</div>
+        </div>
+
+        <!-- Date -->
+        <div class="history-card-date">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${s.date}
+        </div>
+
+        <!-- Stats: exercises + time in one row -->
+        <div class="history-card-stats-row">
+          <div class="history-card-stat">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 4.5h11"/><path d="M6.5 19.5h11"/><path d="M4.5 6.5v11"/><path d="M19.5 6.5v11"/></svg>
+            ${exCount} exercise${exCount !== 1 ? 's' : ''}
+          </div>
+          <div class="history-card-stat">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ${duration}
+          </div>
+        </div>
+
+        <!-- Footer: View Details + More -->
+        <div class="history-card-footer">
+          <button class="btn-outline-secondary" onclick="viewSessionDetails(${s.id})">
+            View details
+          </button>
           <div class="dropdown-wrapper">
             <button class="btn-more" onclick="toggleDropdown(event, ${s.id})" aria-label="More options">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -383,28 +408,6 @@ function renderHistory() {
               </button>
             </div>
           </div>
-        </div>
-
-        <!-- Date -->
-        <div class="history-card-date">${s.date}</div>
-
-        <!-- Stats -->
-        <div class="history-card-stats">
-          <div class="history-card-stat">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 4.5h11"/><path d="M6.5 19.5h11"/><path d="M4.5 6.5v11"/><path d="M19.5 6.5v11"/></svg>
-            ${exCount} exercise${exCount !== 1 ? 's' : ''}
-          </div>
-          <div class="history-card-stat">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            ${duration}
-          </div>
-        </div>
-
-        <!-- Footer: View Details -->
-        <div class="history-card-footer">
-          <button class="btn-outline-secondary" onclick="viewSessionDetails(${s.id})">
-            View details
-          </button>
         </div>
       </div>`;
   }).join('');

@@ -619,29 +619,37 @@ select.input {
 .btn-more:hover { background: #f4f4f5; border-color: #a1a1aa; }
 .btn-more svg   { width: 14px; height: 14px; color: #71717a; stroke: #71717a; }
 
-/* Card meta info */
+/* Card date with calendar icon */
 .history-card-date {
-  font-size: 0.72rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: #71717a;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-.history-card-stats {
+.history-card-date svg {
+  width: 13px; height: 13px;
+  stroke: #a1a1aa;
+  flex-shrink: 0;
+}
+
+/* Stats in one row with 16px gap */
+.history-card-stats-row {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex: 1;
+  align-items: center;
+  gap: 16px;
 }
 
 .history-card-stat {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-size: 0.78rem;
   color: #71717a;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .history-card-stat svg {
@@ -650,9 +658,12 @@ select.input {
   flex-shrink: 0;
 }
 
-/* Card footer: View Details button */
+/* Card footer: View Details + More in one row */
 .history-card-footer {
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Secondary (Outline) button — Figma 9-1070 style */
@@ -661,7 +672,7 @@ select.input {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
+  flex: 1;
   min-height: 34px;
   padding: 6px 14px;
   background: rgba(255,255,255,0.1);
@@ -689,7 +700,7 @@ select.input {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 4px);
+  bottom: calc(100% + 4px);
   right: 0;
   z-index: 50;
   background: #fff;
