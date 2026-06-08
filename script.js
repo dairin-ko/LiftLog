@@ -31,10 +31,66 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 // ─────────────────────────────────────────
+//  Default workout templates
+// ─────────────────────────────────────────
+const DEFAULT_TEMPLATES = [
+  {
+    id: 'tpl_lower', name: 'Lower-body workout',
+    exercises: [
+      { exercise: 'Squats',             sets: 4, reps: 8,  weight: 60 },
+      { exercise: 'Leg Press',          sets: 3, reps: 12, weight: 80 },
+      { exercise: 'Romanian Deadlift',  sets: 3, reps: 10, weight: 50 },
+      { exercise: 'Leg Curls',          sets: 3, reps: 12, weight: 30 },
+      { exercise: 'Calf Raises',        sets: 3, reps: 15, weight: 40 },
+    ]
+  },
+  {
+    id: 'tpl_chest', name: 'Chest day',
+    exercises: [
+      { exercise: 'Bench Press',           sets: 5, reps: 5,  weight: 80 },
+      { exercise: 'Incline Dumbbell Press',sets: 4, reps: 8,  weight: 28 },
+      { exercise: 'Decline Press',         sets: 3, reps: 10, weight: 60 },
+      { exercise: 'Cable Flyes',           sets: 3, reps: 12, weight: 15 },
+    ]
+  },
+  {
+    id: 'tpl_upper', name: 'Upper-body workout',
+    exercises: [
+      { exercise: 'Pull-ups',          sets: 4, reps: 8,  weight: 0  },
+      { exercise: 'Bench Press',       sets: 3, reps: 10, weight: 70 },
+      { exercise: 'Overhead Press',    sets: 3, reps: 10, weight: 40 },
+      { exercise: 'Barbell Rows',      sets: 3, reps: 12, weight: 60 },
+      { exercise: 'Face Pulls',        sets: 3, reps: 15, weight: 20 },
+    ]
+  },
+  {
+    id: 'tpl_full', name: 'Full body',
+    exercises: [
+      { exercise: 'Squats',         sets: 3, reps: 8, weight: 60 },
+      { exercise: 'Deadlift',       sets: 3, reps: 5, weight: 80 },
+      { exercise: 'Bench Press',    sets: 3, reps: 8, weight: 70 },
+      { exercise: 'Pull-ups',       sets: 3, reps: 8, weight: 0  },
+      { exercise: 'Overhead Press', sets: 3, reps: 10,weight: 40 },
+    ]
+  },
+  {
+    id: 'tpl_back', name: 'Back and triceps workout',
+    exercises: [
+      { exercise: 'Deadlift',        sets: 4, reps: 5,  weight: 100 },
+      { exercise: 'Barbell Rows',    sets: 4, reps: 8,  weight: 60  },
+      { exercise: 'Pull-ups',        sets: 3, reps: 8,  weight: 0   },
+      { exercise: 'Tricep Dips',     sets: 3, reps: 12, weight: 0   },
+      { exercise: 'Skull Crushers',  sets: 3, reps: 10, weight: 20  },
+    ]
+  },
+];
+
+// ─────────────────────────────────────────
 //  Data
 // ─────────────────────────────────────────
-let sessions     = JSON.parse(localStorage.getItem('ll_sessions'))     || [];
+let sessions      = JSON.parse(localStorage.getItem('ll_sessions'))    || [];
 let activeWorkout = JSON.parse(localStorage.getItem('ll_active'))      || null;
+let templates     = JSON.parse(localStorage.getItem('ll_templates'))   || DEFAULT_TEMPLATES;
 
 // ─────────────────────────────────────────
 //  Header date
@@ -46,7 +102,7 @@ document.getElementById('headerDate').textContent = new Date().toLocaleDateStrin
 // ─────────────────────────────────────────
 //  Workout lifecycle
 // ─────────────────────────────────────────
-document.getElementById('startBtn').addEventListener('click', startWorkout);
+document.getElementById('startBtn').addEventListener('click', openStartModal);
 document.getElementById('finishBtn').addEventListener('click', finishWorkout);
 
 // SVG icons for badges (Lucide inline)
@@ -56,12 +112,106 @@ const ICONS = {
   weight: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.905 1.46L2.1 18.5A2 2 0 0 0 4 21h16a2 2 0 0 0 1.925-2.54L19.4 9.46A2 2 0 0 0 17.48 8Z"/></svg>`,
 };
 
-function startWorkout() {
+// ─────────────────────────────────────────
+//  Start Workout Modal
+// ─────────────────────────────────────────
+let selectedTemplateId = null;
+
+function openStartModal() {
+  selectedTemplateId = null;
+  renderTemplateList();
+  document.getElementById('startModal').classList.add('open');
+  document.getElementById('modalStart').disabled = true;
+}
+
+function closeStartModal() {
+  document.getElementById('startModal').classList.remove('open');
+}
+
+function renderTemplateList() {
+  const list = document.getElementById('templateList');
+
+  const templateItems = templates.map(t => `
+    <div class="template-item" data-id="${t.id}" onclick="selectTemplate('${t.id}')">
+      <div class="template-radio"><div class="template-radio-dot"></div></div>
+      <div class="template-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+          <path d="M17.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+          <path d="M6.5 4.5h11"/><path d="M6.5 19.5h11"/><path d="M4.5 6.5v11"/><path d="M19.5 6.5v11"/>
+        </svg>
+      </div>
+      <div class="template-info">
+        <div class="template-name">${t.name}</div>
+        <div class="template-meta">${t.exercises.length} exercises</div>
+        <div class="template-exercises">
+          ${t.exercises.map(e => `
+            <div class="template-exercise-row">
+              <span class="template-exercise-name">${e.exercise}</span>
+              <span class="template-exercise-detail">${e.sets}×${e.reps}${e.weight ? ' · ' + e.weight + ' kg' : ''}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const customItem = `
+    <div class="template-item custom" data-id="custom" onclick="selectTemplate('custom')">
+      <div class="template-radio"><div class="template-radio-dot"></div></div>
+      <div class="template-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14"/><path d="M5 12h14"/>
+        </svg>
+      </div>
+      <div class="template-info">
+        <div class="template-name">Create custom workout</div>
+        <div class="template-meta">Start from scratch and add exercises manually</div>
+      </div>
+    </div>
+  `;
+
+  list.innerHTML = templateItems + customItem;
+}
+
+function selectTemplate(id) {
+  selectedTemplateId = id;
+  document.querySelectorAll('.template-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
+  });
+  document.getElementById('modalStart').disabled = false;
+}
+
+document.getElementById('modalClose').addEventListener('click', closeStartModal);
+document.getElementById('modalCancel').addEventListener('click', closeStartModal);
+document.getElementById('startModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('startModal')) closeStartModal();
+});
+
+document.getElementById('modalStart').addEventListener('click', () => {
+  closeStartModal();
+  startWorkout(selectedTemplateId);
+});
+
+function startWorkout(templateId = null) {
+  const tpl = templates.find(t => t.id === templateId);
   activeWorkout = {
     id:        Date.now(),
     startTime: Date.now(),
     date:      new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    exercises: []
+    name:      tpl ? tpl.name : null,
+    exercises: tpl
+      ? tpl.exercises.map(e => ({
+          id:      Date.now() + Math.random(),
+          exercise: e.exercise,
+          sets:    String(e.sets),
+          reps:    String(e.reps),
+          weight:  e.weight ? String(e.weight) : null,
+          feeling: 'good',
+          notes:   null,
+          time:    new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+        }))
+      : []
   };
   saveActive();
   renderAll();
@@ -577,7 +727,7 @@ function renderSessionsPage() {
 // Start workout from Sessions page
 document.getElementById('startBtn2').addEventListener('click', () => {
   navigateTo('home');
-  startWorkout();
+  openStartModal();
 });
 
 // ─────────────────────────────────────────

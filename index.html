@@ -301,6 +301,34 @@
     <button class="btn-ghost-timer" onclick="stopTimer()">✕ Stop</button>
   </div>
 
+  <!-- ══ START WORKOUT MODAL ══ -->
+  <div class="modal-overlay" id="startModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Start Workout</h2>
+          <p class="modal-subtitle">Choose a saved plan or create a new one</p>
+        </div>
+        <button class="modal-close" id="modalClose">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;stroke:currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Template list -->
+        <div class="template-list" id="templateList"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-ghost-modal" id="modalCancel">Cancel</button>
+        <button class="btn-primary-modal" id="modalStart" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;stroke:currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Start Workout
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
