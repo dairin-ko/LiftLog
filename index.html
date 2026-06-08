@@ -29,36 +29,67 @@
 
   <div class="container page">
 
-    <!-- KPI Row -->
-    <section class="kpi-row">
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap kpi-purple">
-          <i data-lucide="calendar-days" class="kpi-svg"></i>
+    <!-- KPI Section: Ring chart + 3 cards -->
+    <section class="kpi-section card">
+
+      <!-- Left: Ring chart -->
+      <div class="ring-wrapper">
+        <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ring 1 — outer — Kcal (green) -->
+          <circle class="ring-bg" cx="110" cy="110" r="96"/>
+          <circle class="ring-progress" id="ringKcal" cx="110" cy="110" r="96"
+            stroke="#4ade80" stroke-dasharray="0 603" />
+
+          <!-- Ring 2 — middle — Workouts/week (blue) -->
+          <circle class="ring-bg" cx="110" cy="110" r="72"/>
+          <circle class="ring-progress" id="ringWeek" cx="110" cy="110" r="72"
+            stroke="#38bdf8" stroke-dasharray="0 452" />
+
+          <!-- Ring 3 — inner — Time trained (teal) -->
+          <circle class="ring-bg" cx="110" cy="110" r="48"/>
+          <circle class="ring-progress" id="ringTime" cx="110" cy="110" r="48"
+            stroke="#02bdd9" stroke-dasharray="0 302" />
+        </svg>
+
+        <!-- Center label -->
+        <div class="ring-center">
+          <i data-lucide="dumbbell" class="ring-icon"></i>
+          <div class="ring-value" id="ringCenterValue">0</div>
+          <div class="ring-label">workouts</div>
         </div>
-        <div class="kpi-label">Total Workouts</div>
-        <div class="kpi-value" id="kpiWorkouts">0</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap kpi-orange">
-          <i data-lucide="repeat-2" class="kpi-svg"></i>
+
+      <!-- Right: 3 KPI cards -->
+      <div class="kpi-cards-col">
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-green">
+            <i data-lucide="flame" class="kpi-svg"></i>
+          </div>
+          <div class="kpi-text">
+            <div class="kpi-label">Kcal burned</div>
+            <div class="kpi-value" id="kpiKcal">0</div>
+          </div>
         </div>
-        <div class="kpi-label">Sets Completed</div>
-        <div class="kpi-value" id="kpiSets">0</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap kpi-green">
-          <i data-lucide="weight" class="kpi-svg"></i>
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-blue">
+            <i data-lucide="calendar-days" class="kpi-svg"></i>
+          </div>
+          <div class="kpi-text">
+            <div class="kpi-label">Workouts / week</div>
+            <div class="kpi-value" id="kpiWeek">0</div>
+          </div>
         </div>
-        <div class="kpi-label">Total Volume</div>
-        <div class="kpi-value" id="kpiWeight">0 kg</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon-wrap kpi-blue">
-          <i data-lucide="zap" class="kpi-svg"></i>
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-purple">
+            <i data-lucide="timer" class="kpi-svg"></i>
+          </div>
+          <div class="kpi-text">
+            <div class="kpi-label">Time trained</div>
+            <div class="kpi-value" id="kpiTime">0 min</div>
+          </div>
         </div>
-        <div class="kpi-label">This Week</div>
-        <div class="kpi-value" id="kpiWeek">0</div>
       </div>
+
     </section>
 
     <!-- Workout In Progress (hidden by default) -->

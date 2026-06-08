@@ -183,30 +183,48 @@ function removeExercise(id) {
 }
 
 // ─────────────────────────────────────────
-//  KPI
+//  KPI + Ring chart
 // ─────────────────────────────────────────
 function renderKPI() {
+  const weekAgo      = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const weekSessions = sessions.filter(s => s.startTime >= weekAgo);
   const allExercises = sessions.flatMap(s => s.exercises);
 
-  // Total workouts
-  document.getElementById('kpiWorkouts').textContent = sessions.length;
+  // Workouts this week
+  const weekCount = weekSessions.length;
+  document.getElementById('kpiWeek').textContent = weekCount;
 
-  // Total sets
-  const totalSets = allExercises.reduce((acc, e) => acc + (parseInt(e.sets) || 0), 0);
-  document.getElementById('kpiSets').textContent = totalSets;
+  // Time trained (total minutes from session durations)
+  const totalSec  = sessions.reduce((a, s) => a + (s.duration || 0), 0);
+  const totalMin  = Math.round(totalSec / 60);
+  document.getElementById('kpiTime').textContent = totalMin >= 60
+    ? `${Math.floor(totalMin/60)}h ${totalMin%60}m`
+    : `${totalMin} min`;
 
-  // Total volume (sets × reps × weight)
-  const vol = allExercises.reduce((acc, e) => {
-    return acc + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0);
-  }, 0);
-  document.getElementById('kpiWeight').textContent = vol >= 1000
-    ? (vol / 1000).toFixed(1) + ' t'
-    : vol + ' kg';
+  // Kcal estimate: sets × reps × weight × 0.15 (rough MET-based)
+  const kcal = Math.round(allExercises.reduce((acc, e) => {
+    return acc + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0) * 0.15;
+  }, 0));
+  document.getElementById('kpiKcal').textContent = kcal.toLocaleString();
 
-  // This week
-  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-  const thisWeek = sessions.filter(s => s.startTime >= weekAgo).length;
-  document.getElementById('kpiWeek').textContent = thisWeek;
+  // Ring center — total workouts
+  document.getElementById('ringCenterValue').textContent = sessions.length;
+
+  // Animate rings
+  // Outer ring: Kcal — goal 3000 kcal, r=96, C=603
+  setRing('ringKcal', kcal, 3000, 603);
+  // Middle ring: Workouts/week — goal 5, r=72, C=452
+  setRing('ringWeek', weekCount, 5, 452);
+  // Inner ring: Time trained — goal 300 min, r=48, C=302
+  setRing('ringTime', totalMin, 300, 302);
+}
+
+function setRing(id, value, goal, circumference) {
+  const pct      = Math.min(value / goal, 1);
+  const filled   = pct * circumference;
+  const gap      = circumference - filled;
+  document.getElementById(id).style.strokeDasharray = `${filled} ${gap + (circumference - filled)}`;
+  document.getElementById(id).setAttribute('stroke-dasharray', `${filled} ${circumference}`);
 }
 
 // ─────────────────────────────────────────
