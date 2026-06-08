@@ -326,11 +326,19 @@ function renderBarChart() {
 }
 
 // ─────────────────────────────────────────
-//  History
+//  History (grid cards)
 // ─────────────────────────────────────────
+function workoutTitle(s) {
+  if (s.name) return s.name;
+  if (s.exercises.length > 0) {
+    const first = s.exercises[0].exercise;
+    return first.length > 22 ? first.slice(0, 20) + '…' : first;
+  }
+  return 'Workout';
+}
+
 function renderHistory() {
   const container = document.getElementById('historyList');
-  const feelings  = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
 
   if (!sessions.length) {
     container.innerHTML = `
@@ -342,42 +350,124 @@ function renderHistory() {
   }
 
   container.innerHTML = sessions.map(s => {
-    const duration = s.duration ? formatDuration(s.duration) : '';
+    const duration = s.duration ? formatDuration(s.duration) : '—';
     const exCount  = s.exercises.length;
+    const title    = workoutTitle(s);
 
     return `
-      <div class="history-card">
-        <div class="history-card-header">
-          <div>
-            <div class="history-date">${s.date}</div>
-            <div class="history-meta">
-              ${exCount} exercise${exCount !== 1 ? 's' : ''}
-              ${duration ? ` · ${duration}` : ''}
+      <div class="history-card" data-session-id="${s.id}">
+        <!-- Top row: name + more -->
+        <div class="history-card-top">
+          <div class="history-card-name">${title}</div>
+          <div class="dropdown-wrapper">
+            <button class="btn-more" onclick="toggleDropdown(event, ${s.id})" aria-label="More options">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </button>
+            <div class="dropdown-menu" id="dropdown-${s.id}">
+              <button class="dropdown-item" onclick="editSession(${s.id})">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+              </button>
+              <button class="dropdown-item" onclick="duplicateSession(${s.id})">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Duplicate
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item danger" onclick="removeSession(${s.id})">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                Delete
+              </button>
             </div>
           </div>
-          <button class="btn-delete" onclick="removeSession(${s.id})">✕</button>
         </div>
-        ${s.exercises.map(e => `
-          <div class="history-exercise">
-            <div>
-              <div class="history-exercise-name">${e.exercise}</div>
-              <div class="badges">
-                ${e.sets   ? `<span class="badge">${ICONS.repeat} ${e.sets} sets</span>`  : ''}
-                ${e.reps   ? `<span class="badge">${ICONS.x} ${e.reps} reps</span>`       : ''}
-                ${e.weight ? `<span class="badge">${ICONS.weight} ${e.weight} kg</span>`  : ''}
-              </div>
-            </div>
+
+        <!-- Date -->
+        <div class="history-card-date">${s.date}</div>
+
+        <!-- Stats -->
+        <div class="history-card-stats">
+          <div class="history-card-stat">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 4.5h11"/><path d="M6.5 19.5h11"/><path d="M4.5 6.5v11"/><path d="M19.5 6.5v11"/></svg>
+            ${exCount} exercise${exCount !== 1 ? 's' : ''}
           </div>
-        `).join('')}
+          <div class="history-card-stat">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ${duration}
+          </div>
+        </div>
+
+        <!-- Footer: View Details -->
+        <div class="history-card-footer">
+          <button class="btn-outline-secondary" onclick="viewSessionDetails(${s.id})">
+            View details
+          </button>
+        </div>
       </div>`;
   }).join('');
 }
 
+// ─────────────────────────────────────────
+//  Dropdown logic
+// ─────────────────────────────────────────
+function toggleDropdown(e, id) {
+  e.stopPropagation();
+  const menu = document.getElementById(`dropdown-${id}`);
+  const isOpen = menu.classList.contains('open');
+  // close all
+  document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+  if (!isOpen) menu.classList.add('open');
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click', () => {
+  document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+});
+
+// ─────────────────────────────────────────
+//  Session actions
+// ─────────────────────────────────────────
 function removeSession(id) {
+  document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
   sessions = sessions.filter(s => s.id !== id);
   saveSessions();
   renderKPI();
   renderHistory();
+}
+
+function duplicateSession(id) {
+  document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+  const original = sessions.find(s => s.id === id);
+  if (!original) return;
+  const copy = JSON.parse(JSON.stringify(original));
+  copy.id        = Date.now();
+  copy.startTime = Date.now();
+  copy.date      = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  copy.name      = (copy.name || workoutTitle(original)) + ' (copy)';
+  sessions.unshift(copy);
+  saveSessions();
+  renderKPI();
+  renderHistory();
+}
+
+function editSession(id) {
+  document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+  const s = sessions.find(s => s.id === id);
+  if (!s) return;
+  const newName = prompt('Rename workout:', s.name || workoutTitle(s));
+  if (newName === null) return;
+  s.name = newName.trim() || workoutTitle(s);
+  saveSessions();
+  renderHistory();
+}
+
+function viewSessionDetails(id) {
+  const s = sessions.find(s => s.id === id);
+  if (!s) return;
+  navigateTo('sessions');
 }
 
 

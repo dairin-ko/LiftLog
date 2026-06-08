@@ -556,19 +556,199 @@ select.input {
 
 .btn-ghost-sm:hover { color: #ef4444; background: #fef2f2; }
 
-/* ── History ── */
-.history-card {
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  transition: border-color 0.15s;
+/* ── History Grid ── */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
-.history-card:hover { border-color: #e4e4e7; }
+/* ── History Card (new grid style) ── */
+.history-card {
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
 
+.history-card:hover {
+  border-color: #e4e4e7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+/* Card top row: name + more button */
+.history-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.history-card-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #09090b;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+}
+
+/* More icon button — Figma 5074-1800 style */
+.btn-more {
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 0;
+}
+
+.btn-more:hover { background: #f4f4f5; border-color: #a1a1aa; }
+.btn-more svg   { width: 14px; height: 14px; color: #71717a; stroke: #71717a; }
+
+/* Card meta info */
+.history-card-date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.history-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #71717a;
+  font-weight: 500;
+}
+
+.history-card-stat svg {
+  width: 13px; height: 13px;
+  stroke: #a1a1aa;
+  flex-shrink: 0;
+}
+
+/* Card footer: View Details button */
+.history-card-footer {
+  margin-top: auto;
+}
+
+/* Secondary (Outline) button — Figma 9-1070 style */
+.btn-outline-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid #d4d4d4;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0a0a0a;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btn-outline-secondary:hover {
+  background: #f4f4f5;
+  border-color: #a1a1aa;
+}
+
+/* ── Dropdown Menu ── */
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 50;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  min-width: 160px;
+  padding: 4px;
+  display: none;
+  flex-direction: column;
+}
+
+.dropdown-menu.open { display: flex; }
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #3f3f46;
+  cursor: pointer;
+  border-radius: 7px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  transition: background 0.12s, color 0.12s;
+}
+
+.dropdown-item:hover { background: #f4f4f5; color: #09090b; }
+.dropdown-item.danger:hover { background: #fef2f2; color: #ef4444; }
+
+.dropdown-item svg {
+  width: 13px; height: 13px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #f4f4f5;
+  margin: 4px 0;
+}
+
+/* ── Empty History ── */
+.empty-history {
+  text-align: center;
+  padding: 48px 24px;
+  color: #a1a1aa;
+  grid-column: 1 / -1;
+}
+
+.empty-history-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-history-text { font-size: 0.875rem; line-height: 1.6; }
+
+/* Legacy (used in Workout Sessions page) */
 .history-card-header {
   display: flex;
   align-items: flex-start;
@@ -585,10 +765,7 @@ select.input {
   margin-bottom: 2px;
 }
 
-.history-meta {
-  font-size: 0.78rem;
-  color: #a1a1aa;
-}
+.history-meta { font-size: 0.78rem; color: #a1a1aa; }
 
 .history-exercise {
   display: flex;
@@ -601,23 +778,8 @@ select.input {
 }
 
 .history-exercise:last-child { margin-bottom: 0; }
-
-.history-exercise-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
+.history-exercise-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
 .feeling-icon { font-size: 1rem; }
-
-.empty-history {
-  text-align: center;
-  padding: 48px 24px;
-  color: #a1a1aa;
-}
-
-.empty-history-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.empty-history-text { font-size: 0.875rem; line-height: 1.6; }
 
 /* ── Floating Timer ── */
 .timer-fab {
@@ -792,10 +954,15 @@ select.input {
 }
 
 /* ── Responsive ── */
+@media (max-width: 1200px) {
+  .history-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 @media (max-width: 1000px) {
   .kpi-dashboard { grid-template-columns: 200px 220px 1fr; }
   .nav-link span:not(.soon-badge) { display: none; }
   .nav-link { padding: 8px; gap: 0; }
+  .history-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -804,9 +971,11 @@ select.input {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .form-row-3 { grid-template-columns: 1fr 1fr; }
   .container { padding: 0 20px; }
+  .history-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
   .form-row-2 { grid-template-columns: 1fr; }
   .timer-panel { width: calc(100vw - 32px); right: 16px; }
+  .history-grid { grid-template-columns: 1fr; }
 }
