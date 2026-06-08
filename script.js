@@ -17,6 +17,13 @@ document.getElementById('headerDate').textContent = new Date().toLocaleDateStrin
 document.getElementById('startBtn').addEventListener('click', startWorkout);
 document.getElementById('finishBtn').addEventListener('click', finishWorkout);
 
+// SVG icons for badges (Lucide inline)
+const ICONS = {
+  repeat: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+  x:      `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
+  weight: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.905 1.46L2.1 18.5A2 2 0 0 0 4 21h16a2 2 0 0 0 1.925-2.54L19.4 9.46A2 2 0 0 0 17.48 8Z"/></svg>`,
+};
+
 function startWorkout() {
   activeWorkout = {
     id:        Date.now(),
@@ -134,7 +141,7 @@ function renderAll() {
 function renderUI() {
   const hasActive = !!activeWorkout;
   document.getElementById('activeSection').style.display = hasActive ? 'block' : 'none';
-  document.getElementById('startSection').style.display  = hasActive ? 'none'  : 'block';
+  document.getElementById('startBtn').style.display      = hasActive ? 'none'  : 'flex';
   if (hasActive) renderActiveExercises();
 }
 
@@ -155,16 +162,15 @@ function renderActiveExercises() {
       <div style="flex:1; min-width:0;">
         <div class="active-exercise-name">${e.exercise}</div>
         <div class="badges">
-          ${e.sets   ? `<span class="badge">🔁 ${e.sets} sets</span>`  : ''}
-          ${e.reps   ? `<span class="badge">✕ ${e.reps} reps</span>`  : ''}
-          ${e.weight ? `<span class="badge">⚖️ ${e.weight} kg</span>` : ''}
-          ${e.notes  ? `<span class="badge">📝 ${e.notes}</span>`      : ''}
+          ${e.sets   ? `<span class="badge">${ICONS.repeat} ${e.sets} sets</span>`  : ''}
+          ${e.reps   ? `<span class="badge">${ICONS.x} ${e.reps} reps</span>`       : ''}
+          ${e.weight ? `<span class="badge">${ICONS.weight} ${e.weight} kg</span>`  : ''}
         </div>
+        ${e.notes ? `<div style="font-size:0.73rem;color:#71717a;margin-top:5px;">${e.notes}</div>` : ''}
       </div>
-      <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-        <span>${feelings[e.feeling] || '🙂'}</span>
-        <button class="btn-delete" onclick="removeExercise(${e.id})">✕</button>
-      </div>
+      <button class="btn-delete" onclick="removeExercise(${e.id})">
+        <i data-lucide="x" style="width:13px;height:13px;"></i>
+      </button>
     </div>
   `).join('');
 }
@@ -240,12 +246,11 @@ function renderHistory() {
             <div>
               <div class="history-exercise-name">${e.exercise}</div>
               <div class="badges">
-                ${e.sets   ? `<span class="badge">🔁 ${e.sets} sets</span>`  : ''}
-                ${e.reps   ? `<span class="badge">✕ ${e.reps} reps</span>`  : ''}
-                ${e.weight ? `<span class="badge">⚖️ ${e.weight} kg</span>` : ''}
+                ${e.sets   ? `<span class="badge">${ICONS.repeat} ${e.sets} sets</span>`  : ''}
+                ${e.reps   ? `<span class="badge">${ICONS.x} ${e.reps} reps</span>`       : ''}
+                ${e.weight ? `<span class="badge">${ICONS.weight} ${e.weight} kg</span>`  : ''}
               </div>
             </div>
-            <span class="feeling-icon">${feelings[e.feeling] || '🙂'}</span>
           </div>
         `).join('')}
       </div>`;
@@ -259,14 +264,6 @@ function removeSession(id) {
   renderHistory();
 }
 
-document.getElementById('clearAll').addEventListener('click', () => {
-  if (sessions.length && confirm('Delete all workout history?')) {
-    sessions = [];
-    saveSessions();
-    renderKPI();
-    renderHistory();
-  }
-});
 
 function formatDuration(sec) {
   const h = Math.floor(sec / 3600);

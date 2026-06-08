@@ -128,19 +128,14 @@
       </div>
     </section>
 
-    <!-- Start Workout (shown when no active workout) -->
-    <section id="startSection">
-      <button class="btn-start-workout" id="startBtn">
-        <i data-lucide="play-circle" style="width:20px;height:20px;"></i>
-        Start New Workout
-      </button>
-    </section>
-
     <!-- Workout History -->
     <section>
       <div class="section-heading">
         <h2 class="section-title">Workout History</h2>
-        <button class="btn-ghost-sm" id="clearAll">Clear all</button>
+        <button class="btn-start-workout" id="startBtn" style="display:none;" aria-label="Start New Workout">
+          <i data-lucide="play" style="width:14px;height:14px;"></i>
+          Start New Workout
+        </button>
       </div>
       <div id="historyList"></div>
     </section>

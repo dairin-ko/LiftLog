@@ -116,30 +116,24 @@ body {
 
 /* ── Start Workout Button ── */
 .btn-start-workout {
-  width: 100%;
-  height: 52px;
+  height: 36px;
+  padding: 0 14px;
   background: #09090b;
   color: #fff;
   border: none;
-  border-radius: 14px;
-  font-size: 0.95rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  gap: 7px;
+  white-space: nowrap;
+  transition: background 0.15s;
 }
 
-.btn-start-workout:hover {
-  background: #27272a;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-
-.btn-start-workout:active { transform: scale(0.99); }
+.btn-start-workout:hover { background: #27272a; }
 
 /* ── Active Workout Card ── */
 .workout-active {
@@ -233,8 +227,18 @@ body {
   color: #3f3f46;
   background: #f4f4f5;
   border: 1px solid #e4e4e7;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge svg {
+  width: 11px;
+  height: 11px;
+  stroke: #71717a;
+  flex-shrink: 0;
 }
 
 .btn-delete {
