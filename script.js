@@ -242,8 +242,8 @@ function renderKPI() {
   // Ring center
   document.getElementById('ringCenterValue').textContent = sessions.length;
 
-  // Segmented ring — single ring r=90, C=565.5, gap=14
-  renderSegmentedRing(kcal, 3000, weekCount, 5, totalMin, 300);
+  // Segmented ring — 2 segments: workouts/week + time trained
+  renderSegmentedRing(weekCount, 5, totalMin, 300);
 
   // Bar chart — weekly kcal
   renderBarChart();
@@ -252,35 +252,29 @@ function renderKPI() {
 // ─────────────────────────────────────────
 //  Segmented ring (single ring, 3 arcs)
 // ─────────────────────────────────────────
-function renderSegmentedRing(kcal, kcalGoal, week, weekGoal, mins, minsGoal) {
+function renderSegmentedRing(week, weekGoal, mins, minsGoal) {
   const C   = 2 * Math.PI * 90; // ≈ 565.5
-  const gap = 14;
-  const totalGaps = 3 * gap;
-  const available = C - totalGaps;
+  const gap = 16;
+  const available = C - gap * 2;
 
-  // Each segment proportional to % of goal (min 4% so it's visible)
   const pcts = [
-    Math.max(Math.min(kcal  / kcalGoal,  1), 0),
-    Math.max(Math.min(week  / weekGoal,  1), 0),
-    Math.max(Math.min(mins  / minsGoal,  1), 0),
+    Math.max(Math.min(week / weekGoal, 1), 0),
+    Math.max(Math.min(mins / minsGoal, 1), 0),
   ];
 
-  // Total proportion sum → distribute available arc
   const totalPct = pcts.reduce((a, b) => a + b, 0) || 1;
   const segs = pcts.map(p => (p / totalPct) * available);
 
-  // Segments: [kcal=green, week=blue, time=purple]
-  const ids = ['segKcal', 'segWeek', 'segTime'];
+  // [blue=workouts, green=time]
+  const ids = ['segWeek', 'segTime'];
 
   let offset = 0;
   ids.forEach((id, i) => {
-    const len  = segs[i];
-    const el   = document.getElementById(id);
+    const len = segs[i];
+    const el  = document.getElementById(id);
     if (!el) return;
-    // dasharray: show only this segment, hide rest
-    el.setAttribute('stroke-dasharray', `${len} ${C - len}`);
-    // dashoffset: shift start clockwise by offset (negative = forward)
-    el.setAttribute('stroke-dashoffset', -(offset));
+    el.setAttribute('stroke-dasharray',  `${len} ${C - len}`);
+    el.setAttribute('stroke-dashoffset', -offset);
     offset += len + gap;
   });
 }

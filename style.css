@@ -130,7 +130,7 @@ body {
 .kpi-cards-col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .kpi-card {
