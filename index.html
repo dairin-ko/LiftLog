@@ -315,8 +315,29 @@
       </div>
 
       <div class="modal-body">
-        <!-- Template list -->
-        <div class="template-list" id="templateList"></div>
+        <!-- Workout type select -->
+        <div class="modal-field">
+          <label class="label">Workout type</label>
+          <select class="input" id="modalTemplateSelect">
+            <option value="" disabled selected>Select a workout plan...</option>
+          </select>
+        </div>
+
+        <!-- Divider -->
+        <div class="modal-divider">
+          <span class="modal-divider-text">or</span>
+        </div>
+
+        <!-- Create custom -->
+        <button class="modal-custom-btn" id="modalCustomBtn">
+          <div class="modal-custom-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;stroke:#09090b"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </div>
+          <div>
+            <div class="modal-custom-title">Create custom workout</div>
+            <div class="modal-custom-sub">Start from scratch and add exercises manually</div>
+          </div>
+        </button>
       </div>
 
       <div class="modal-footer">

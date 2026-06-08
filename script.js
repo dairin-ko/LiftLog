@@ -119,68 +119,39 @@ let selectedTemplateId = null;
 
 function openStartModal() {
   selectedTemplateId = null;
-  renderTemplateList();
-  document.getElementById('startModal').classList.add('open');
+  // Populate select
+  const sel = document.getElementById('modalTemplateSelect');
+  sel.innerHTML = '<option value="" disabled selected>Select a workout plan...</option>';
+  templates.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = `${t.name} · ${t.exercises.length} exercises`;
+    sel.appendChild(opt);
+  });
+  sel.value = '';
+  document.getElementById('modalCustomBtn').classList.remove('selected');
   document.getElementById('modalStart').disabled = true;
+  document.getElementById('startModal').classList.add('open');
 }
 
 function closeStartModal() {
   document.getElementById('startModal').classList.remove('open');
 }
 
-function renderTemplateList() {
-  const list = document.getElementById('templateList');
-
-  const templateItems = templates.map(t => `
-    <div class="template-item" data-id="${t.id}" onclick="selectTemplate('${t.id}')">
-      <div class="template-radio"><div class="template-radio-dot"></div></div>
-      <div class="template-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M17.5 6.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-          <path d="M17.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M6.5 21.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-          <path d="M6.5 4.5h11"/><path d="M6.5 19.5h11"/><path d="M4.5 6.5v11"/><path d="M19.5 6.5v11"/>
-        </svg>
-      </div>
-      <div class="template-info">
-        <div class="template-name">${t.name}</div>
-        <div class="template-meta">${t.exercises.length} exercises</div>
-        <div class="template-exercises">
-          ${t.exercises.map(e => `
-            <div class="template-exercise-row">
-              <span class="template-exercise-name">${e.exercise}</span>
-              <span class="template-exercise-detail">${e.sets}×${e.reps}${e.weight ? ' · ' + e.weight + ' kg' : ''}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    </div>
-  `).join('');
-
-  const customItem = `
-    <div class="template-item custom" data-id="custom" onclick="selectTemplate('custom')">
-      <div class="template-radio"><div class="template-radio-dot"></div></div>
-      <div class="template-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14"/><path d="M5 12h14"/>
-        </svg>
-      </div>
-      <div class="template-info">
-        <div class="template-name">Create custom workout</div>
-        <div class="template-meta">Start from scratch and add exercises manually</div>
-      </div>
-    </div>
-  `;
-
-  list.innerHTML = templateItems + customItem;
-}
-
-function selectTemplate(id) {
-  selectedTemplateId = id;
-  document.querySelectorAll('.template-item').forEach(el => {
-    el.classList.toggle('selected', el.dataset.id === id);
-  });
+// Select from dropdown
+document.getElementById('modalTemplateSelect').addEventListener('change', function() {
+  selectedTemplateId = this.value;
+  document.getElementById('modalCustomBtn').classList.remove('selected');
   document.getElementById('modalStart').disabled = false;
-}
+});
+
+// Create custom button
+document.getElementById('modalCustomBtn').addEventListener('click', () => {
+  selectedTemplateId = 'custom';
+  document.getElementById('modalTemplateSelect').value = '';
+  document.getElementById('modalCustomBtn').classList.add('selected');
+  document.getElementById('modalStart').disabled = false;
+});
 
 document.getElementById('modalClose').addEventListener('click', closeStartModal);
 document.getElementById('modalCancel').addEventListener('click', closeStartModal);
