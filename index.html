@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LiftLog</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🏋️ LiftLog</h1>
+    <p>Твій персональний щоденник тренувань</p>
+  </header>
+
+  <main>
+
+    <!-- Форма додавання тренування -->
+    <section class="log-form">
+      <h2>Записати тренування</h2>
+
+      <div class="form-group">
+        <label>Вправа</label>
+        <input type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Підходи</label>
+          <input type="number" id="sets" placeholder="3" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Повторення</label>
+          <input type="number" id="reps" placeholder="10" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Вага (кг)</label>
+          <input type="number" id="weight" placeholder="50" min="0" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Відпочинок (сек)</label>
+          <input type="number" id="rest" placeholder="90" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Самопочуття</label>
+          <select id="feeling">
+            <option value="great">😄 Чудово</option>
+            <option value="good" selected>🙂 Добре</option>
+            <option value="ok">😐 Нормально</option>
+            <option value="bad">😔 Погано</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Нотатки</label>
+        <input type="text" id="notes" placeholder="Необов'язково..." />
+      </div>
+
+      <button id="addBtn">Додати вправу</button>
+    </section>
+
+    <!-- Таймер відпочинку -->
+    <section class="timer-section">
+      <h2>⏱ Таймер відпочинку</h2>
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="timer-buttons">
+        <button class="btn-secondary" onclick="startTimer(60)">1 хв</button>
+        <button class="btn-secondary" onclick="startTimer(90)">1:30</button>
+        <button class="btn-secondary" onclick="startTimer(120)">2 хв</button>
+        <button class="btn-secondary" onclick="startTimer(180)">3 хв</button>
+        <button class="btn-danger" onclick="stopTimer()">Стоп</button>
+      </div>
+    </section>
+
+    <!-- Список тренувань -->
+    <section class="workout-list">
+      <h2>Сьогоднішнє тренування</h2>
+      <div id="workoutList" class="empty-state">
+        <p>Поки що немає записів. Додай першу вправу! 💪</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
