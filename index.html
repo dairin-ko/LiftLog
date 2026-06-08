@@ -10,125 +10,133 @@
 </head>
 <body>
 
-  <!-- Background gradient -->
   <div class="bg-gradient"></div>
 
-  <div class="app-wrapper">
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-icon">🏋️</div>
+        <div>
+          <h1 class="logo-title">LiftLog</h1>
+          <p class="logo-sub">Твій щоденник тренувань</p>
+        </div>
+      </div>
+      <div class="header-date" id="headerDate"></div>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header class="header">
-      <div class="header-inner">
-        <div class="logo">
-          <div class="logo-icon">🏋️</div>
+  <div class="container page">
+
+    <!-- 1. KPI Row -->
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-icon">🗓</div>
+        <div class="kpi-value" id="kpiWorkouts">0</div>
+        <div class="kpi-label">Тренувань всього</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🔁</div>
+        <div class="kpi-value" id="kpiSets">0</div>
+        <div class="kpi-label">Підходів зроблено</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">⚖️</div>
+        <div class="kpi-value" id="kpiWeight">0 кг</div>
+        <div class="kpi-label">Загальний об'єм</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">💪</div>
+        <div class="kpi-value" id="kpiToday">0</div>
+        <div class="kpi-label">Вправ сьогодні</div>
+      </div>
+    </section>
+
+    <!-- 2. Add exercise -->
+    <section class="card add-section">
+      <div class="add-section-header" id="toggleForm">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="card-icon">➕</span>
           <div>
-            <h1 class="logo-title">LiftLog</h1>
-            <p class="logo-sub">Твій щоденник тренувань</p>
+            <div class="card-title">Додати вправу</div>
+            <div class="card-desc">Запиши новий підхід</div>
           </div>
         </div>
-        <div class="header-badge">MVP v1</div>
+        <span class="toggle-arrow" id="toggleArrow">▾</span>
       </div>
-    </header>
 
-    <main class="main">
+      <div class="form-body" id="formBody">
+        <div class="form-divider"></div>
 
-      <!-- Left column -->
-      <div class="col-left">
+        <div class="form-field">
+          <label class="label">Назва вправи</label>
+          <input class="input" type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
+        </div>
 
-        <!-- Log form card -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-icon">📋</span>
-            <div>
-              <h2 class="card-title">Записати вправу</h2>
-              <p class="card-desc">Заповни деталі підходу</p>
-            </div>
-          </div>
-
+        <div class="form-row-3">
           <div class="form-field">
-            <label class="label">Назва вправи</label>
-            <input class="input" type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
+            <label class="label">Підходи</label>
+            <input class="input" type="number" id="sets" placeholder="3" min="1" />
           </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label class="label">Підходи</label>
-              <input class="input" type="number" id="sets" placeholder="3" min="1" />
-            </div>
-            <div class="form-field">
-              <label class="label">Повторення</label>
-              <input class="input" type="number" id="reps" placeholder="10" min="1" />
-            </div>
-            <div class="form-field">
-              <label class="label">Вага (кг)</label>
-              <input class="input" type="number" id="weight" placeholder="50" min="0" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label class="label">Відпочинок (сек)</label>
-              <input class="input" type="number" id="rest" placeholder="90" min="0" />
-            </div>
-            <div class="form-field">
-              <label class="label">Самопочуття</label>
-              <select class="input" id="feeling">
-                <option value="great">😄 Чудово</option>
-                <option value="good" selected>🙂 Добре</option>
-                <option value="ok">😐 Нормально</option>
-                <option value="bad">😔 Погано</option>
-              </select>
-            </div>
-          </div>
-
           <div class="form-field">
-            <label class="label">Нотатки <span class="label-optional">необов'язково</span></label>
-            <input class="input" type="text" id="notes" placeholder="Коментар до підходу..." />
+            <label class="label">Повторення</label>
+            <input class="input" type="number" id="reps" placeholder="10" min="1" />
           </div>
-
-          <button class="btn-primary" id="addBtn">
-            <span>+</span> Додати вправу
-          </button>
-        </div>
-
-        <!-- Timer card -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-icon">⏱</span>
-            <div>
-              <h2 class="card-title">Таймер відпочинку</h2>
-              <p class="card-desc">Автоматично запускається після додавання</p>
-            </div>
-          </div>
-
-          <div class="timer-display" id="timerDisplay">00:00</div>
-
-          <div class="timer-presets">
-            <button class="btn-outline" onclick="startTimer(60)">1 хв</button>
-            <button class="btn-outline" onclick="startTimer(90)">1:30</button>
-            <button class="btn-outline" onclick="startTimer(120)">2 хв</button>
-            <button class="btn-outline" onclick="startTimer(180)">3 хв</button>
-            <button class="btn-ghost" onclick="stopTimer()">✕ Стоп</button>
+          <div class="form-field">
+            <label class="label">Вага (кг)</label>
+            <input class="input" type="number" id="weight" placeholder="50" min="0" />
           </div>
         </div>
 
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="label">Самопочуття</label>
+            <select class="input" id="feeling">
+              <option value="great">😄 Чудово</option>
+              <option value="good" selected>🙂 Добре</option>
+              <option value="ok">😐 Нормально</option>
+              <option value="bad">😔 Погано</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="label">Нотатки <span class="label-opt">необов'язково</span></label>
+            <input class="input" type="text" id="notes" placeholder="Коментар..." />
+          </div>
+        </div>
+
+        <button class="btn-primary" id="addBtn">+ Додати вправу</button>
       </div>
+    </section>
 
-      <!-- Right column -->
-      <div class="col-right">
-        <div class="card card-full">
-          <div class="card-header">
-            <span class="card-icon">💪</span>
-            <div>
-              <h2 class="card-title">Сьогоднішнє тренування</h2>
-              <p class="card-desc" id="workoutCount">Немає записів</p>
-            </div>
-          </div>
-
-          <div id="workoutList"></div>
-        </div>
+    <!-- 3. History dashboard -->
+    <section>
+      <div class="section-heading">
+        <h2 class="section-title">📅 Історія тренувань</h2>
+        <button class="btn-ghost-sm" id="clearAll">Очистити все</button>
       </div>
+      <div id="historyList"></div>
+    </section>
 
-    </main>
+  </div>
+
+  <!-- Floating Timer -->
+  <div class="timer-fab" id="timerFab">
+    <button class="timer-fab-btn" id="timerToggle" title="Таймер відпочинку">⏱</button>
+  </div>
+
+  <div class="timer-panel" id="timerPanel">
+    <div class="timer-panel-header">
+      <span class="timer-panel-title">⏱ Таймер відпочинку</span>
+      <button class="timer-close" id="timerClose">✕</button>
+    </div>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-presets">
+      <button class="btn-outline" onclick="startTimer(60)">1 хв</button>
+      <button class="btn-outline" onclick="startTimer(90)">1:30</button>
+      <button class="btn-outline" onclick="startTimer(120)">2 хв</button>
+      <button class="btn-outline" onclick="startTimer(180)">3 хв</button>
+    </div>
+    <button class="btn-ghost-timer" onclick="stopTimer()">✕ Зупинити</button>
   </div>
 
   <script src="script.js"></script>

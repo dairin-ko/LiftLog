@@ -1,105 +1,179 @@
-// --- Дані ---
+// ── Storage ──
 let workouts = JSON.parse(localStorage.getItem('liftlog_workouts')) || [];
 
-// --- Додати вправу ---
+// ── Header date ──
+const days = ['Неділя','Понеділок','Вівторок','Середа','Четвер','П\'ятниця','Субота'];
+const months = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+const now = new Date();
+document.getElementById('headerDate').textContent =
+  `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+
+// ── Collapsible form ──
+const formBody   = document.getElementById('formBody');
+const toggleArrow = document.getElementById('toggleArrow');
+
+document.getElementById('toggleForm').addEventListener('click', () => {
+  const isOpen = formBody.classList.toggle('open');
+  toggleArrow.classList.toggle('open', isOpen);
+});
+
+// ── Add workout ──
 document.getElementById('addBtn').addEventListener('click', () => {
   const exercise = document.getElementById('exercise').value.trim();
-  const sets     = document.getElementById('sets').value;
-  const reps     = document.getElementById('reps').value;
-  const weight   = document.getElementById('weight').value;
-  const rest     = document.getElementById('rest').value;
-  const feeling  = document.getElementById('feeling').value;
-  const notes    = document.getElementById('notes').value.trim();
-
   if (!exercise) {
     document.getElementById('exercise').focus();
     document.getElementById('exercise').style.borderColor = '#ef4444';
-    setTimeout(() => document.getElementById('exercise').style.borderColor = '', 1500);
+    document.getElementById('exercise').style.boxShadow  = '0 0 0 3px rgba(239,68,68,0.12)';
+    setTimeout(() => {
+      document.getElementById('exercise').style.borderColor = '';
+      document.getElementById('exercise').style.boxShadow  = '';
+    }, 1800);
     return;
   }
 
   const workout = {
-    id: Date.now(),
-    exercise, sets, reps, weight, rest, feeling, notes,
-    time: new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' })
+    id:       Date.now(),
+    exercise,
+    sets:     document.getElementById('sets').value    || null,
+    reps:     document.getElementById('reps').value    || null,
+    weight:   document.getElementById('weight').value  || null,
+    feeling:  document.getElementById('feeling').value,
+    notes:    document.getElementById('notes').value.trim() || null,
+    date:     new Date().toLocaleDateString('uk-UA'),
+    time:     new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' })
   };
 
-  workouts.push(workout);
+  workouts.unshift(workout); // newest first
   save();
   render();
   clearForm();
 
-  if (rest && parseInt(rest) > 0) startTimer(parseInt(rest));
+  // Close form after adding
+  formBody.classList.remove('open');
+  toggleArrow.classList.remove('open');
 });
 
-// --- Рендер ---
+// ── Render all ──
 function render() {
-  const list = document.getElementById('workoutList');
-  const count = document.getElementById('workoutCount');
+  renderKPI();
+  renderHistory();
+}
 
-  count.textContent = workouts.length
-    ? `${workouts.length} ${declension(workouts.length, 'вправа', 'вправи', 'вправ')}`
-    : 'Немає записів';
+// ── KPI ──
+function renderKPI() {
+  const today = new Date().toLocaleDateString('uk-UA');
+  const todayItems = workouts.filter(w => w.date === today);
+
+  // Unique training days
+  const uniqueDays = new Set(workouts.map(w => w.date)).size;
+
+  // Total sets
+  const totalSets = workouts.reduce((acc, w) => acc + (parseInt(w.sets) || 0), 0);
+
+  // Total volume (sets × reps × weight)
+  const totalVolume = workouts.reduce((acc, w) => {
+    const s = parseInt(w.sets) || 0;
+    const r = parseInt(w.reps) || 0;
+    const kg = parseFloat(w.weight) || 0;
+    return acc + s * r * kg;
+  }, 0);
+
+  document.getElementById('kpiWorkouts').textContent = uniqueDays;
+  document.getElementById('kpiSets').textContent     = totalSets;
+  document.getElementById('kpiWeight').textContent   = totalVolume >= 1000
+    ? (totalVolume / 1000).toFixed(1) + ' т'
+    : totalVolume + ' кг';
+  document.getElementById('kpiToday').textContent    = todayItems.length;
+}
+
+// ── History grouped by date ──
+function renderHistory() {
+  const container = document.getElementById('historyList');
 
   if (!workouts.length) {
-    list.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">🏋️</div>
-        <div class="empty-text">Поки що немає записів.<br>Додай першу вправу!</div>
+    container.innerHTML = `
+      <div class="empty-history">
+        <div class="empty-history-icon">📋</div>
+        <div class="empty-history-text">Поки що немає записів.<br>Додай першу вправу!</div>
       </div>`;
     return;
   }
 
-  const feelings = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
+  // Group by date
+  const groups = {};
+  workouts.forEach(w => {
+    if (!groups[w.date]) groups[w.date] = [];
+    groups[w.date].push(w);
+  });
 
-  list.innerHTML = workouts.map(w => `
-    <div class="workout-item">
-      <div style="flex:1; min-width:0;">
-        <div class="workout-name">${w.exercise}</div>
-        <div class="workout-badges">
-          ${w.sets   ? `<span class="badge">🔁 ${w.sets} підх.</span>` : ''}
-          ${w.reps   ? `<span class="badge">✕ ${w.reps} повт.</span>` : ''}
-          ${w.weight ? `<span class="badge">⚖️ ${w.weight} кг</span>` : ''}
-          ${w.rest   ? `<span class="badge">⏸ ${w.rest} сек</span>` : ''}
+  const feelings = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
+  const today    = new Date().toLocaleDateString('uk-UA');
+
+  container.innerHTML = Object.entries(groups).map(([date, items]) => `
+    <div class="day-group">
+      <div class="day-label">${date === today ? '🟢 Сьогодні' : date} — ${items.length} ${declension(items.length,'вправа','вправи','вправ')}</div>
+      ${items.map(w => `
+        <div class="workout-item">
+          <div style="flex:1;min-width:0;">
+            <div class="workout-name">${w.exercise}</div>
+            <div class="badges">
+              ${w.sets   ? `<span class="badge">🔁 ${w.sets} підх.</span>` : ''}
+              ${w.reps   ? `<span class="badge">✕ ${w.reps} повт.</span>` : ''}
+              ${w.weight ? `<span class="badge">⚖️ ${w.weight} кг</span>` : ''}
+            </div>
+            ${w.notes ? `<div class="workout-note">📝 ${w.notes}</div>` : ''}
+          </div>
+          <div class="workout-right">
+            <span>${feelings[w.feeling] || '🙂'}</span>
+            <span class="time-label">${w.time}</span>
+            <button class="btn-delete" onclick="removeWorkout(${w.id})">✕</button>
+          </div>
         </div>
-        ${w.notes ? `<div class="workout-note">📝 ${w.notes}</div>` : ''}
-      </div>
-      <div class="workout-right">
-        <span class="feeling-badge">${feelings[w.feeling] || '🙂'}</span>
-        <span class="time-label">${w.time}</span>
-        <button class="btn-delete" onclick="remove(${w.id})">✕</button>
-      </div>
+      `).join('')}
     </div>
   `).join('');
 }
 
-function remove(id) {
+function removeWorkout(id) {
   workouts = workouts.filter(w => w.id !== id);
   save();
   render();
 }
+
+document.getElementById('clearAll').addEventListener('click', () => {
+  if (workouts.length && confirm('Видалити всі записи?')) {
+    workouts = [];
+    save();
+    render();
+  }
+});
 
 function save() {
   localStorage.setItem('liftlog_workouts', JSON.stringify(workouts));
 }
 
 function clearForm() {
-  ['exercise','sets','reps','weight','rest','notes'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  ['exercise','sets','reps','weight','notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('feeling').value = 'good';
 }
 
 function declension(n, one, few, many) {
-  const mod10 = n % 10, mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return `${n} ${one}`;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} ${few}`;
+  const m = n % 10, h = n % 100;
+  if (m === 1 && h !== 11) return `${n} ${one}`;
+  if (m >= 2 && m <= 4 && (h < 10 || h >= 20)) return `${n} ${few}`;
   return `${n} ${many}`;
 }
 
-// --- Таймер ---
+// ── Timer ──
 let timerInterval = null;
 let timeLeft = 0;
+
+const timerPanel  = document.getElementById('timerPanel');
+const timerToggle = document.getElementById('timerToggle');
+const timerClose  = document.getElementById('timerClose');
+
+timerToggle.addEventListener('click', () => timerPanel.classList.toggle('open'));
+timerClose.addEventListener('click',  () => timerPanel.classList.remove('open'));
 
 function startTimer(seconds) {
   stopTimer();
@@ -108,6 +182,7 @@ function startTimer(seconds) {
   el.classList.add('running');
   el.classList.remove('done');
   tick();
+  timerPanel.classList.add('open');
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -118,10 +193,7 @@ function startTimer(seconds) {
       el.classList.remove('running');
       el.classList.add('done');
       el.textContent = '✓ Готово!';
-      setTimeout(() => {
-        el.classList.remove('done');
-        el.textContent = '00:00';
-      }, 2500);
+      setTimeout(() => { el.classList.remove('done'); el.textContent = '00:00'; }, 2500);
     }
   }, 1000);
 }
@@ -129,16 +201,16 @@ function startTimer(seconds) {
 function stopTimer() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   const el = document.getElementById('timerDisplay');
-  el.classList.remove('running', 'done');
+  el.classList.remove('running','done');
   el.textContent = '00:00';
   timeLeft = 0;
 }
 
 function tick() {
-  const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-  const s = String(timeLeft % 60).padStart(2, '0');
+  const m = String(Math.floor(timeLeft / 60)).padStart(2,'0');
+  const s = String(timeLeft % 60).padStart(2,'0');
   document.getElementById('timerDisplay').textContent = `${m}:${s}`;
 }
 
-// --- Init ---
+// ── Init ──
 render();
