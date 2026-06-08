@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,7 +20,7 @@
         <div class="logo-icon">🏋️</div>
         <div>
           <h1 class="logo-title">LiftLog</h1>
-          <p class="logo-sub">Твій щоденник тренувань</p>
+          <p class="logo-sub">Your personal training journal</p>
         </div>
       </div>
       <div class="header-date" id="headerDate"></div>
@@ -32,43 +32,31 @@
     <!-- 1. KPI Row -->
     <section class="kpi-row">
       <div class="kpi-card">
-        <div class="kpi-header">
-          <div class="kpi-icon-wrap kpi-purple">
-            <i data-lucide="calendar-days" class="kpi-svg"></i>
-          </div>
-          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        <div class="kpi-icon-wrap kpi-purple">
+          <i data-lucide="calendar-days" class="kpi-svg"></i>
         </div>
-        <div class="kpi-label">Тренувань всього</div>
+        <div class="kpi-label">Total Workouts</div>
         <div class="kpi-value" id="kpiWorkouts">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-header">
-          <div class="kpi-icon-wrap kpi-orange">
-            <i data-lucide="repeat-2" class="kpi-svg"></i>
-          </div>
-          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        <div class="kpi-icon-wrap kpi-orange">
+          <i data-lucide="repeat-2" class="kpi-svg"></i>
         </div>
-        <div class="kpi-label">Підходів зроблено</div>
+        <div class="kpi-label">Sets Completed</div>
         <div class="kpi-value" id="kpiSets">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-header">
-          <div class="kpi-icon-wrap kpi-green">
-            <i data-lucide="weight" class="kpi-svg"></i>
-          </div>
-          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        <div class="kpi-icon-wrap kpi-green">
+          <i data-lucide="weight" class="kpi-svg"></i>
         </div>
-        <div class="kpi-label">Загальний об'єм</div>
-        <div class="kpi-value" id="kpiWeight">0 кг</div>
+        <div class="kpi-label">Total Volume</div>
+        <div class="kpi-value" id="kpiWeight">0 kg</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-header">
-          <div class="kpi-icon-wrap kpi-blue">
-            <i data-lucide="zap" class="kpi-svg"></i>
-          </div>
-          <span class="kpi-arrow"><i data-lucide="arrow-right" class="arrow-svg"></i></span>
+        <div class="kpi-icon-wrap kpi-blue">
+          <i data-lucide="zap" class="kpi-svg"></i>
         </div>
-        <div class="kpi-label">Вправ сьогодні</div>
+        <div class="kpi-label">Today's Exercises</div>
         <div class="kpi-value" id="kpiToday">0</div>
       </div>
     </section>
@@ -79,8 +67,8 @@
         <div style="display:flex; align-items:center; gap:10px;">
           <span class="card-icon">➕</span>
           <div>
-            <div class="card-title">Додати вправу</div>
-            <div class="card-desc">Запиши новий підхід</div>
+            <div class="card-title">Add Exercise</div>
+            <div class="card-desc">Log a new set</div>
           </div>
         </div>
         <span class="toggle-arrow" id="toggleArrow">▾</span>
@@ -90,50 +78,50 @@
         <div class="form-divider"></div>
 
         <div class="form-field">
-          <label class="label">Назва вправи</label>
-          <input class="input" type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
+          <label class="label">Exercise Name</label>
+          <input class="input" type="text" id="exercise" placeholder="e.g. Bench Press" />
         </div>
 
         <div class="form-row-3">
           <div class="form-field">
-            <label class="label">Підходи</label>
+            <label class="label">Sets</label>
             <input class="input" type="number" id="sets" placeholder="3" min="1" />
           </div>
           <div class="form-field">
-            <label class="label">Повторення</label>
+            <label class="label">Reps</label>
             <input class="input" type="number" id="reps" placeholder="10" min="1" />
           </div>
           <div class="form-field">
-            <label class="label">Вага (кг)</label>
+            <label class="label">Weight (kg)</label>
             <input class="input" type="number" id="weight" placeholder="50" min="0" />
           </div>
         </div>
 
         <div class="form-row-2">
           <div class="form-field">
-            <label class="label">Самопочуття</label>
+            <label class="label">How do you feel?</label>
             <select class="input" id="feeling">
-              <option value="great">😄 Чудово</option>
-              <option value="good" selected>🙂 Добре</option>
-              <option value="ok">😐 Нормально</option>
-              <option value="bad">😔 Погано</option>
+              <option value="great">😄 Great</option>
+              <option value="good" selected>🙂 Good</option>
+              <option value="ok">😐 Okay</option>
+              <option value="bad">😔 Bad</option>
             </select>
           </div>
           <div class="form-field">
-            <label class="label">Нотатки <span class="label-opt">необов'язково</span></label>
-            <input class="input" type="text" id="notes" placeholder="Коментар..." />
+            <label class="label">Notes <span class="label-opt">optional</span></label>
+            <input class="input" type="text" id="notes" placeholder="Any comments..." />
           </div>
         </div>
 
-        <button class="btn-primary" id="addBtn">+ Додати вправу</button>
+        <button class="btn-primary" id="addBtn">+ Add Exercise</button>
       </div>
     </section>
 
     <!-- 3. History dashboard -->
     <section>
       <div class="section-heading">
-        <h2 class="section-title">📅 Історія тренувань</h2>
-        <button class="btn-ghost-sm" id="clearAll">Очистити все</button>
+        <h2 class="section-title">📅 Workout History</h2>
+        <button class="btn-ghost-sm" id="clearAll">Clear all</button>
       </div>
       <div id="historyList"></div>
     </section>
@@ -142,22 +130,22 @@
 
   <!-- Floating Timer -->
   <div class="timer-fab" id="timerFab">
-    <button class="timer-fab-btn" id="timerToggle" title="Таймер відпочинку">⏱</button>
+    <button class="timer-fab-btn" id="timerToggle" title="Rest Timer">⏱</button>
   </div>
 
   <div class="timer-panel" id="timerPanel">
     <div class="timer-panel-header">
-      <span class="timer-panel-title">⏱ Таймер відпочинку</span>
+      <span class="timer-panel-title">⏱ Rest Timer</span>
       <button class="timer-close" id="timerClose">✕</button>
     </div>
     <div class="timer-display" id="timerDisplay">00:00</div>
     <div class="timer-presets">
-      <button class="btn-outline" onclick="startTimer(60)">1 хв</button>
+      <button class="btn-outline" onclick="startTimer(60)">1 min</button>
       <button class="btn-outline" onclick="startTimer(90)">1:30</button>
-      <button class="btn-outline" onclick="startTimer(120)">2 хв</button>
-      <button class="btn-outline" onclick="startTimer(180)">3 хв</button>
+      <button class="btn-outline" onclick="startTimer(120)">2 min</button>
+      <button class="btn-outline" onclick="startTimer(180)">3 min</button>
     </div>
-    <button class="btn-ghost-timer" onclick="stopTimer()">✕ Зупинити</button>
+    <button class="btn-ghost-timer" onclick="stopTimer()">✕ Stop</button>
   </div>
 
   <script src="script.js"></script>

@@ -2,11 +2,9 @@
 let workouts = JSON.parse(localStorage.getItem('liftlog_workouts')) || [];
 
 // ── Header date ──
-const days = ['Неділя','Понеділок','Вівторок','Середа','Четвер','П\'ятниця','Субота'];
-const months = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
 const now = new Date();
 document.getElementById('headerDate').textContent =
-  `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+  now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
 // ── Collapsible form ──
 const formBody   = document.getElementById('formBody');
@@ -81,8 +79,8 @@ function renderKPI() {
   document.getElementById('kpiWorkouts').textContent = uniqueDays;
   document.getElementById('kpiSets').textContent     = totalSets;
   document.getElementById('kpiWeight').textContent   = totalVolume >= 1000
-    ? (totalVolume / 1000).toFixed(1) + ' т'
-    : totalVolume + ' кг';
+    ? (totalVolume / 1000).toFixed(1) + ' t'
+    : totalVolume + ' kg';
   document.getElementById('kpiToday').textContent    = todayItems.length;
 }
 
@@ -94,7 +92,7 @@ function renderHistory() {
     container.innerHTML = `
       <div class="empty-history">
         <div class="empty-history-icon">📋</div>
-        <div class="empty-history-text">Поки що немає записів.<br>Додай першу вправу!</div>
+        <div class="empty-history-text">No workouts yet.<br>Add your first exercise!</div>
       </div>`;
     return;
   }
@@ -111,15 +109,15 @@ function renderHistory() {
 
   container.innerHTML = Object.entries(groups).map(([date, items]) => `
     <div class="day-group">
-      <div class="day-label">${date === today ? '🟢 Сьогодні' : date} — ${items.length} ${declension(items.length,'вправа','вправи','вправ')}</div>
+      <div class="day-label">${date === today ? '🟢 Today' : date} — ${items.length} exercise${items.length !== 1 ? 's' : ''}</div>
       ${items.map(w => `
         <div class="workout-item">
           <div style="flex:1;min-width:0;">
             <div class="workout-name">${w.exercise}</div>
             <div class="badges">
-              ${w.sets   ? `<span class="badge">🔁 ${w.sets} підх.</span>` : ''}
-              ${w.reps   ? `<span class="badge">✕ ${w.reps} повт.</span>` : ''}
-              ${w.weight ? `<span class="badge">⚖️ ${w.weight} кг</span>` : ''}
+              ${w.sets   ? `<span class="badge">🔁 ${w.sets} sets</span>` : ''}
+              ${w.reps   ? `<span class="badge">✕ ${w.reps} reps</span>` : ''}
+              ${w.weight ? `<span class="badge">⚖️ ${w.weight} kg</span>` : ''}
             </div>
             ${w.notes ? `<div class="workout-note">📝 ${w.notes}</div>` : ''}
           </div>
@@ -141,7 +139,7 @@ function removeWorkout(id) {
 }
 
 document.getElementById('clearAll').addEventListener('click', () => {
-  if (workouts.length && confirm('Видалити всі записи?')) {
+  if (workouts.length && confirm('Delete all workout records?')) {
     workouts = [];
     save();
     render();
@@ -192,7 +190,7 @@ function startTimer(seconds) {
       timerInterval = null;
       el.classList.remove('running');
       el.classList.add('done');
-      el.textContent = '✓ Готово!';
+      el.textContent = '✓ Done!';
       setTimeout(() => { el.classList.remove('done'); el.textContent = '00:00'; }, 2500);
     }
   }, 1000);
