@@ -250,33 +250,28 @@ function renderKPI() {
 }
 
 // ─────────────────────────────────────────
-//  Segmented ring (single ring, 3 arcs)
+//  Concentric rings (2 independent rings)
 // ─────────────────────────────────────────
 function renderSegmentedRing(week, weekGoal, mins, minsGoal) {
-  const C   = 2 * Math.PI * 90; // ≈ 565.5
-  const gap = 16;
-  const available = C - gap * 2;
+  // Outer ring — Workouts last week (r=90, C≈565.5)
+  const C_outer = 2 * Math.PI * 90;
+  const pctWeek = Math.max(Math.min(week / weekGoal, 1), 0);
+  const lenWeek = pctWeek * C_outer;
+  const elWeek  = document.getElementById('segWeek');
+  if (elWeek) {
+    elWeek.setAttribute('stroke-dasharray',  `${lenWeek} ${C_outer - lenWeek}`);
+    elWeek.setAttribute('stroke-dashoffset', '0');
+  }
 
-  const pcts = [
-    Math.max(Math.min(week / weekGoal, 1), 0),
-    Math.max(Math.min(mins / minsGoal, 1), 0),
-  ];
-
-  const totalPct = pcts.reduce((a, b) => a + b, 0) || 1;
-  const segs = pcts.map(p => (p / totalPct) * available);
-
-  // [blue=workouts, green=time]
-  const ids = ['segWeek', 'segTime'];
-
-  let offset = 0;
-  ids.forEach((id, i) => {
-    const len = segs[i];
-    const el  = document.getElementById(id);
-    if (!el) return;
-    el.setAttribute('stroke-dasharray',  `${len} ${C - len}`);
-    el.setAttribute('stroke-dashoffset', -offset);
-    offset += len + gap;
-  });
+  // Inner ring — Time trained (r=62, C≈389.6)
+  const C_inner = 2 * Math.PI * 62;
+  const pctTime = Math.max(Math.min(mins / minsGoal, 1), 0);
+  const lenTime = pctTime * C_inner;
+  const elTime  = document.getElementById('segTime');
+  if (elTime) {
+    elTime.setAttribute('stroke-dasharray',  `${lenTime} ${C_inner - lenTime}`);
+    elTime.setAttribute('stroke-dashoffset', '0');
+  }
 }
 
 // ─────────────────────────────────────────

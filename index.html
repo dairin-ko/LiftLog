@@ -85,17 +85,19 @@
         </div>
       </div>
 
-      <!-- Col 2: Segmented ring -->
+      <!-- Col 2: Concentric rings -->
       <div class="ring-container card">
         <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-          <!-- BG track -->
+          <!-- Outer ring track — Workouts last week -->
           <circle class="ring-track" cx="110" cy="110" r="90"/>
-          <!-- Segment 1 — Workouts last week (blue) -->
+          <!-- Outer ring — Workouts last week (blue) -->
           <circle class="ring-seg" id="segWeek" cx="110" cy="110" r="90"
             stroke="#38bdf8" stroke-dasharray="0 565"/>
-          <!-- Segment 2 — Time trained (green) -->
-          <circle class="ring-seg" id="segTime" cx="110" cy="110" r="90"
-            stroke="#4ade80" stroke-dasharray="0 565"/>
+          <!-- Inner ring track — Time trained -->
+          <circle class="ring-track" cx="110" cy="110" r="62"/>
+          <!-- Inner ring — Time trained (green) -->
+          <circle class="ring-seg" id="segTime" cx="110" cy="110" r="62"
+            stroke="#4ade80" stroke-dasharray="0 389"/>
         </svg>
         <div class="ring-center">
           <i data-lucide="dumbbell" class="ring-icon-sm"></i>
