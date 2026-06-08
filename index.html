@@ -4,87 +4,132 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LiftLog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>🏋️ LiftLog</h1>
-    <p>Твій персональний щоденник тренувань</p>
-  </header>
+  <!-- Background gradient -->
+  <div class="bg-gradient"></div>
 
-  <main>
+  <div class="app-wrapper">
 
-    <!-- Форма додавання тренування -->
-    <section class="log-form">
-      <h2>Записати тренування</h2>
-
-      <div class="form-group">
-        <label>Вправа</label>
-        <input type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Підходи</label>
-          <input type="number" id="sets" placeholder="3" min="1" />
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon">🏋️</div>
+          <div>
+            <h1 class="logo-title">LiftLog</h1>
+            <p class="logo-sub">Твій щоденник тренувань</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Повторення</label>
-          <input type="number" id="reps" placeholder="10" min="1" />
+        <div class="header-badge">MVP v1</div>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <!-- Left column -->
+      <div class="col-left">
+
+        <!-- Log form card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">📋</span>
+            <div>
+              <h2 class="card-title">Записати вправу</h2>
+              <p class="card-desc">Заповни деталі підходу</p>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="label">Назва вправи</label>
+            <input class="input" type="text" id="exercise" placeholder="Наприклад: Жим лежачи" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="label">Підходи</label>
+              <input class="input" type="number" id="sets" placeholder="3" min="1" />
+            </div>
+            <div class="form-field">
+              <label class="label">Повторення</label>
+              <input class="input" type="number" id="reps" placeholder="10" min="1" />
+            </div>
+            <div class="form-field">
+              <label class="label">Вага (кг)</label>
+              <input class="input" type="number" id="weight" placeholder="50" min="0" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="label">Відпочинок (сек)</label>
+              <input class="input" type="number" id="rest" placeholder="90" min="0" />
+            </div>
+            <div class="form-field">
+              <label class="label">Самопочуття</label>
+              <select class="input" id="feeling">
+                <option value="great">😄 Чудово</option>
+                <option value="good" selected>🙂 Добре</option>
+                <option value="ok">😐 Нормально</option>
+                <option value="bad">😔 Погано</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="label">Нотатки <span class="label-optional">необов'язково</span></label>
+            <input class="input" type="text" id="notes" placeholder="Коментар до підходу..." />
+          </div>
+
+          <button class="btn-primary" id="addBtn">
+            <span>+</span> Додати вправу
+          </button>
         </div>
-        <div class="form-group">
-          <label>Вага (кг)</label>
-          <input type="number" id="weight" placeholder="50" min="0" />
+
+        <!-- Timer card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">⏱</span>
+            <div>
+              <h2 class="card-title">Таймер відпочинку</h2>
+              <p class="card-desc">Автоматично запускається після додавання</p>
+            </div>
+          </div>
+
+          <div class="timer-display" id="timerDisplay">00:00</div>
+
+          <div class="timer-presets">
+            <button class="btn-outline" onclick="startTimer(60)">1 хв</button>
+            <button class="btn-outline" onclick="startTimer(90)">1:30</button>
+            <button class="btn-outline" onclick="startTimer(120)">2 хв</button>
+            <button class="btn-outline" onclick="startTimer(180)">3 хв</button>
+            <button class="btn-ghost" onclick="stopTimer()">✕ Стоп</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right column -->
+      <div class="col-right">
+        <div class="card card-full">
+          <div class="card-header">
+            <span class="card-icon">💪</span>
+            <div>
+              <h2 class="card-title">Сьогоднішнє тренування</h2>
+              <p class="card-desc" id="workoutCount">Немає записів</p>
+            </div>
+          </div>
+
+          <div id="workoutList"></div>
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Відпочинок (сек)</label>
-          <input type="number" id="rest" placeholder="90" min="0" />
-        </div>
-        <div class="form-group">
-          <label>Самопочуття</label>
-          <select id="feeling">
-            <option value="great">😄 Чудово</option>
-            <option value="good" selected>🙂 Добре</option>
-            <option value="ok">😐 Нормально</option>
-            <option value="bad">😔 Погано</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Нотатки</label>
-        <input type="text" id="notes" placeholder="Необов'язково..." />
-      </div>
-
-      <button id="addBtn">Додати вправу</button>
-    </section>
-
-    <!-- Таймер відпочинку -->
-    <section class="timer-section">
-      <h2>⏱ Таймер відпочинку</h2>
-      <div class="timer-display" id="timerDisplay">00:00</div>
-      <div class="timer-buttons">
-        <button class="btn-secondary" onclick="startTimer(60)">1 хв</button>
-        <button class="btn-secondary" onclick="startTimer(90)">1:30</button>
-        <button class="btn-secondary" onclick="startTimer(120)">2 хв</button>
-        <button class="btn-secondary" onclick="startTimer(180)">3 хв</button>
-        <button class="btn-danger" onclick="stopTimer()">Стоп</button>
-      </div>
-    </section>
-
-    <!-- Список тренувань -->
-    <section class="workout-list">
-      <h2>Сьогоднішнє тренування</h2>
-      <div id="workoutList" class="empty-state">
-        <p>Поки що немає записів. Додай першу вправу! 💪</p>
-      </div>
-    </section>
-
-  </main>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>

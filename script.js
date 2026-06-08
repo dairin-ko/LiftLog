@@ -1,4 +1,4 @@
-// --- Дані тренування ---
+// --- Дані ---
 let workouts = JSON.parse(localStorage.getItem('liftlog_workouts')) || [];
 
 // --- Додати вправу ---
@@ -12,81 +12,89 @@ document.getElementById('addBtn').addEventListener('click', () => {
   const notes    = document.getElementById('notes').value.trim();
 
   if (!exercise) {
-    alert('Введи назву вправи!');
+    document.getElementById('exercise').focus();
+    document.getElementById('exercise').style.borderColor = '#ef4444';
+    setTimeout(() => document.getElementById('exercise').style.borderColor = '', 1500);
     return;
   }
 
   const workout = {
     id: Date.now(),
-    exercise,
-    sets:    sets    || '—',
-    reps:    reps    || '—',
-    weight:  weight  || '—',
-    rest:    rest    || '—',
-    feeling,
-    notes,
+    exercise, sets, reps, weight, rest, feeling, notes,
     time: new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' })
   };
 
   workouts.push(workout);
-  localStorage.setItem('liftlog_workouts', JSON.stringify(workouts));
-  renderWorkouts();
+  save();
+  render();
   clearForm();
 
-  // Автоматично запустити таймер якщо є відпочинок
-  if (rest && parseInt(rest) > 0) {
-    startTimer(parseInt(rest));
-  }
+  if (rest && parseInt(rest) > 0) startTimer(parseInt(rest));
 });
 
-// --- Відобразити список ---
-function renderWorkouts() {
+// --- Рендер ---
+function render() {
   const list = document.getElementById('workoutList');
+  const count = document.getElementById('workoutCount');
 
-  if (workouts.length === 0) {
-    list.innerHTML = '<div class="empty-state"><p>Поки що немає записів. Додай першу вправу! 💪</p></div>';
+  count.textContent = workouts.length
+    ? `${workouts.length} ${declension(workouts.length, 'вправа', 'вправи', 'вправ')}`
+    : 'Немає записів';
+
+  if (!workouts.length) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🏋️</div>
+        <div class="empty-text">Поки що немає записів.<br>Додай першу вправу!</div>
+      </div>`;
     return;
   }
 
-  const feelingEmoji = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
+  const feelings = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
 
   list.innerHTML = workouts.map(w => `
     <div class="workout-item">
-      <div class="workout-info">
-        <h3>${w.exercise}</h3>
-        <div class="workout-meta">
-          <span>🔁 <strong>${w.sets}</strong> підходів</span>
-          <span>✕ <strong>${w.reps}</strong> повт.</span>
-          <span>⚖️ <strong>${w.weight}</strong> кг</span>
-          <span>⏸ <strong>${w.rest}</strong> сек</span>
-          <span>🕐 ${w.time}</span>
+      <div style="flex:1; min-width:0;">
+        <div class="workout-name">${w.exercise}</div>
+        <div class="workout-badges">
+          ${w.sets   ? `<span class="badge">🔁 ${w.sets} підх.</span>` : ''}
+          ${w.reps   ? `<span class="badge">✕ ${w.reps} повт.</span>` : ''}
+          ${w.weight ? `<span class="badge">⚖️ ${w.weight} кг</span>` : ''}
+          ${w.rest   ? `<span class="badge">⏸ ${w.rest} сек</span>` : ''}
         </div>
-        ${w.notes ? `<div class="workout-notes">📝 ${w.notes}</div>` : ''}
+        ${w.notes ? `<div class="workout-note">📝 ${w.notes}</div>` : ''}
       </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
-        <span class="workout-feeling">${feelingEmoji[w.feeling] || '🙂'}</span>
-        <button class="delete-btn" onclick="deleteWorkout(${w.id})">✕</button>
+      <div class="workout-right">
+        <span class="feeling-badge">${feelings[w.feeling] || '🙂'}</span>
+        <span class="time-label">${w.time}</span>
+        <button class="btn-delete" onclick="remove(${w.id})">✕</button>
       </div>
     </div>
   `).join('');
 }
 
-// --- Видалити вправу ---
-function deleteWorkout(id) {
+function remove(id) {
   workouts = workouts.filter(w => w.id !== id);
-  localStorage.setItem('liftlog_workouts', JSON.stringify(workouts));
-  renderWorkouts();
+  save();
+  render();
 }
 
-// --- Очистити форму ---
+function save() {
+  localStorage.setItem('liftlog_workouts', JSON.stringify(workouts));
+}
+
 function clearForm() {
-  document.getElementById('exercise').value = '';
-  document.getElementById('sets').value = '';
-  document.getElementById('reps').value = '';
-  document.getElementById('weight').value = '';
-  document.getElementById('rest').value = '';
-  document.getElementById('notes').value = '';
+  ['exercise','sets','reps','weight','rest','notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
   document.getElementById('feeling').value = 'good';
+}
+
+function declension(n, one, few, many) {
+  const mod10 = n % 10, mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return `${n} ${one}`;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} ${few}`;
+  return `${n} ${many}`;
 }
 
 // --- Таймер ---
@@ -96,36 +104,41 @@ let timeLeft = 0;
 function startTimer(seconds) {
   stopTimer();
   timeLeft = seconds;
-  const display = document.getElementById('timerDisplay');
-  display.classList.add('running');
-  updateDisplay();
+  const el = document.getElementById('timerDisplay');
+  el.classList.add('running');
+  el.classList.remove('done');
+  tick();
 
   timerInterval = setInterval(() => {
     timeLeft--;
-    updateDisplay();
+    tick();
     if (timeLeft <= 0) {
-      stopTimer();
-      display.textContent = '✅ Готово!';
-      setTimeout(() => { display.textContent = '00:00'; }, 2000);
+      clearInterval(timerInterval);
+      timerInterval = null;
+      el.classList.remove('running');
+      el.classList.add('done');
+      el.textContent = '✓ Готово!';
+      setTimeout(() => {
+        el.classList.remove('done');
+        el.textContent = '00:00';
+      }, 2500);
     }
   }, 1000);
 }
 
 function stopTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  document.getElementById('timerDisplay').classList.remove('running');
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  const el = document.getElementById('timerDisplay');
+  el.classList.remove('running', 'done');
+  el.textContent = '00:00';
   timeLeft = 0;
-  document.getElementById('timerDisplay').textContent = '00:00';
 }
 
-function updateDisplay() {
-  const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-  const s = (timeLeft % 60).toString().padStart(2, '0');
+function tick() {
+  const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+  const s = String(timeLeft % 60).padStart(2, '0');
   document.getElementById('timerDisplay').textContent = `${m}:${s}`;
 }
 
-// --- Ініціалізація ---
-renderWorkouts();
+// --- Init ---
+render();
