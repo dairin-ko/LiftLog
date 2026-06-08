@@ -51,37 +51,10 @@
 
   <div class="container page" id="page-home">
 
-    <!-- KPI Section: Ring chart + 3 cards -->
-    <section class="kpi-section card">
+    <!-- KPI Section -->
+    <section class="kpi-section">
 
-      <!-- Left: Ring chart -->
-      <div class="ring-wrapper">
-        <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-          <!-- Ring 1 — outer — Kcal (green) -->
-          <circle class="ring-bg" cx="110" cy="110" r="96"/>
-          <circle class="ring-progress" id="ringKcal" cx="110" cy="110" r="96"
-            stroke="#4ade80" stroke-dasharray="0 603" />
-
-          <!-- Ring 2 — middle — Workouts/week (blue) -->
-          <circle class="ring-bg" cx="110" cy="110" r="72"/>
-          <circle class="ring-progress" id="ringWeek" cx="110" cy="110" r="72"
-            stroke="#38bdf8" stroke-dasharray="0 452" />
-
-          <!-- Ring 3 — inner — Time trained (teal) -->
-          <circle class="ring-bg" cx="110" cy="110" r="48"/>
-          <circle class="ring-progress" id="ringTime" cx="110" cy="110" r="48"
-            stroke="#02bdd9" stroke-dasharray="0 302" />
-        </svg>
-
-        <!-- Center label -->
-        <div class="ring-center">
-          <i data-lucide="dumbbell" class="ring-icon"></i>
-          <div class="ring-value" id="ringCenterValue">0</div>
-          <div class="ring-label">workouts</div>
-        </div>
-      </div>
-
-      <!-- Right: 3 KPI cards -->
+      <!-- Left: 3 KPI cards stacked -->
       <div class="kpi-cards-col">
         <div class="kpi-card">
           <div class="kpi-icon-wrap kpi-green">
@@ -108,6 +81,41 @@
           <div class="kpi-text">
             <div class="kpi-label">Time trained</div>
             <div class="kpi-value" id="kpiTime">0 min</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Ring chart -->
+      <div class="ring-container card">
+        <div class="ring-wrapper">
+          <svg class="ring-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer ring — Workouts/week (blue) r=84 C=528 -->
+            <circle class="ring-bg" cx="100" cy="100" r="84"/>
+            <circle class="ring-progress" id="ringWeek" cx="100" cy="100" r="84"
+              stroke="#38bdf8" stroke-dasharray="0 528"/>
+
+            <!-- Inner ring — Time trained (teal) r=58 C=364 -->
+            <circle class="ring-bg" cx="100" cy="100" r="58"/>
+            <circle class="ring-progress" id="ringTime" cx="100" cy="100" r="58"
+              stroke="#02bdd9" stroke-dasharray="0 364"/>
+          </svg>
+
+          <div class="ring-center">
+            <i data-lucide="dumbbell" class="ring-icon"></i>
+            <div class="ring-value" id="ringCenterValue">0</div>
+            <div class="ring-label">workouts</div>
+          </div>
+        </div>
+
+        <!-- Ring legend -->
+        <div class="ring-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background:#38bdf8;"></span>
+            <span class="legend-label">Workouts / week</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background:#02bdd9;"></span>
+            <span class="legend-label">Time trained</span>
           </div>
         </div>
       </div>

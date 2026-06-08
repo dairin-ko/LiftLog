@@ -242,13 +242,10 @@ function renderKPI() {
   // Ring center — total workouts
   document.getElementById('ringCenterValue').textContent = sessions.length;
 
-  // Animate rings
-  // Outer ring: Kcal — goal 3000 kcal, r=96, C=603
-  setRing('ringKcal', kcal, 3000, 603);
-  // Middle ring: Workouts/week — goal 5, r=72, C=452
-  setRing('ringWeek', weekCount, 5, 452);
-  // Inner ring: Time trained — goal 300 min, r=48, C=302
-  setRing('ringTime', totalMin, 300, 302);
+  // Outer ring: Workouts/week — goal 5, r=84, C=528
+  setRing('ringWeek', weekCount, 5, 528);
+  // Inner ring: Time trained — goal 300 min, r=58, C=364
+  setRing('ringTime', totalMin, 300, 364);
 }
 
 function setRing(id, value, goal, circumference) {

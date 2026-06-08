@@ -17,9 +17,9 @@ body {
 }
 
 .container {
-  max-width: 860px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 60px;
   position: relative;
   z-index: 1;
 }
@@ -121,88 +121,32 @@ body {
 /* ── KPI Section ── */
 .kpi-section {
   display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 28px 32px;
+  align-items: stretch;
+  gap: 16px;
 }
 
-/* Ring chart */
-.ring-wrapper {
-  position: relative;
-  flex-shrink: 0;
-  width: 200px;
-  height: 200px;
-}
-
-.ring-svg {
-  width: 200px;
-  height: 200px;
-  transform: rotate(-90deg);
-}
-
-.ring-bg {
-  fill: none;
-  stroke: #f4f4f5;
-  stroke-width: 14;
-}
-
-.ring-progress {
-  fill: none;
-  stroke-width: 14;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.8s cubic-bezier(0.4,0,0.2,1);
-}
-
-.ring-center {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.ring-icon {
-  width: 20px; height: 20px;
-  color: #71717a; stroke: #71717a;
-  margin-bottom: 2px;
-}
-
-.ring-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #09090b;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.ring-label {
-  font-size: 0.72rem;
-  color: #71717a;
-  font-weight: 500;
-}
-
-/* KPI cards column */
+/* KPI cards column — left */
 .kpi-cards-col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   flex: 1;
 }
 
 .kpi-card {
-  background: #f8f8f8;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 14px;
-  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 16px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  flex: 1;
 }
 
 .kpi-icon-wrap {
-  width: 38px; height: 38px;
+  width: 40px; height: 40px;
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
@@ -219,9 +163,82 @@ body {
 .kpi-blue   { background: #e0f2fe; }
 .kpi-blue   .kpi-svg { color: #0284c7; stroke: #0284c7; }
 
-.kpi-text { display: flex; flex-direction: column; gap: 1px; }
-.kpi-label { font-size: 0.73rem; color: #71717a; font-weight: 500; }
-.kpi-value { font-size: 1.25rem; font-weight: 700; color: #09090b; line-height: 1.2; }
+.kpi-text { display: flex; flex-direction: column; gap: 3px; }
+.kpi-label { font-size: 0.75rem; color: #71717a; font-weight: 500; }
+.kpi-value { font-size: 1.4rem; font-weight: 700; color: #09090b; line-height: 1; }
+
+/* Ring container — right */
+.ring-container {
+  flex-shrink: 0;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.ring-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.ring-svg {
+  width: 180px;
+  height: 180px;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: #f4f4f5;
+  stroke-width: 16;
+}
+
+.ring-progress {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.9s cubic-bezier(0.4,0,0.2,1);
+}
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ring-icon { width: 18px; height: 18px; color: #a1a1aa; stroke: #a1a1aa; margin-bottom: 2px; }
+.ring-value { font-size: 2rem; font-weight: 700; color: #09090b; line-height: 1; font-variant-numeric: tabular-nums; }
+.ring-label { font-size: 0.7rem; color: #71717a; font-weight: 500; }
+
+/* Ring legend */
+.ring-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #71717a;
+}
+
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
 /* ── Card ── */
 .card {
@@ -746,15 +763,16 @@ select.input {
   .nav-link span:not(.soon-badge) { display: none; }
   .nav-link { padding: 8px; gap: 0; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .ring-container { width: 220px; }
 }
 
 @media (max-width: 700px) {
-  .kpi-section { flex-direction: column; padding: 20px; gap: 20px; }
-  .ring-wrapper { width: 160px; height: 160px; }
-  .ring-svg { width: 160px; height: 160px; }
-  .kpi-cards-col { width: 100%; }
+  .kpi-section { flex-direction: column-reverse; }
+  .ring-container { width: 100%; }
+  .ring-wrapper { width: 150px; height: 150px; }
+  .ring-svg { width: 150px; height: 150px; }
   .form-row-3 { grid-template-columns: 1fr 1fr; }
-  .container { padding: 0 16px; }
+  .container { padding: 0 20px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
