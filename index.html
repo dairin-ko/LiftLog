@@ -29,7 +29,7 @@
 
   <div class="container page">
 
-    <!-- 1. KPI Row -->
+    <!-- KPI Row -->
     <section class="kpi-row">
       <div class="kpi-card">
         <div class="kpi-icon-wrap kpi-purple">
@@ -56,32 +56,45 @@
         <div class="kpi-icon-wrap kpi-blue">
           <i data-lucide="zap" class="kpi-svg"></i>
         </div>
-        <div class="kpi-label">Today's Exercises</div>
-        <div class="kpi-value" id="kpiToday">0</div>
+        <div class="kpi-label">This Week</div>
+        <div class="kpi-value" id="kpiWeek">0</div>
       </div>
     </section>
 
-    <!-- 2. Add exercise -->
-    <section class="card add-section">
-      <div class="add-section-header" id="toggleForm">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span class="card-icon">➕</span>
+    <!-- Workout In Progress (hidden by default) -->
+    <section class="card workout-active" id="activeSection" style="display:none;">
+      <div class="active-header">
+        <div class="active-header-left">
+          <div class="active-dot"></div>
           <div>
-            <div class="card-title">Add Exercise</div>
-            <div class="card-desc">Log a new set</div>
+            <div class="active-title">Workout In Progress</div>
+            <div class="active-timer" id="activeTimer">00:00</div>
           </div>
         </div>
-        <span class="toggle-arrow" id="toggleArrow">▾</span>
+        <button class="btn-finish" id="finishBtn">
+          <i data-lucide="check" style="width:14px;height:14px;"></i>
+          Finish Workout
+        </button>
+      </div>
+
+      <!-- Exercises logged in this session -->
+      <div id="activeExercises"></div>
+
+      <!-- Add exercise form -->
+      <div class="add-exercise-row" id="toggleForm">
+        <div class="add-exercise-trigger">
+          <i data-lucide="plus-circle" style="width:16px;height:16px;color:#71717a;"></i>
+          <span>Add exercise</span>
+        </div>
+        <i data-lucide="chevron-down" class="toggle-chevron" id="toggleChevron" style="width:16px;height:16px;color:#a1a1aa;"></i>
       </div>
 
       <div class="form-body" id="formBody">
         <div class="form-divider"></div>
-
         <div class="form-field">
           <label class="label">Exercise Name</label>
           <input class="input" type="text" id="exercise" placeholder="e.g. Bench Press" />
         </div>
-
         <div class="form-row-3">
           <div class="form-field">
             <label class="label">Sets</label>
@@ -96,7 +109,6 @@
             <input class="input" type="number" id="weight" placeholder="50" min="0" />
           </div>
         </div>
-
         <div class="form-row-2">
           <div class="form-field">
             <label class="label">How do you feel?</label>
@@ -112,15 +124,22 @@
             <input class="input" type="text" id="notes" placeholder="Any comments..." />
           </div>
         </div>
-
         <button class="btn-primary" id="addBtn">+ Add Exercise</button>
       </div>
     </section>
 
-    <!-- 3. History dashboard -->
+    <!-- Start Workout (shown when no active workout) -->
+    <section id="startSection">
+      <button class="btn-start-workout" id="startBtn">
+        <i data-lucide="play-circle" style="width:20px;height:20px;"></i>
+        Start New Workout
+      </button>
+    </section>
+
+    <!-- Workout History -->
     <section>
       <div class="section-heading">
-        <h2 class="section-title">📅 Workout History</h2>
+        <h2 class="section-title">Workout History</h2>
         <button class="btn-ghost-sm" id="clearAll">Clear all</button>
       </div>
       <div id="historyList"></div>
@@ -129,7 +148,7 @@
   </div>
 
   <!-- Floating Timer -->
-  <div class="timer-fab" id="timerFab">
+  <div class="timer-fab">
     <button class="timer-fab-btn" id="timerToggle" title="Rest Timer">⏱</button>
   </div>
 
