@@ -23,11 +23,33 @@
           <p class="logo-sub">Your personal training journal</p>
         </div>
       </div>
+
+      <!-- Nav -->
+      <nav class="nav">
+        <a class="nav-link active" data-page="home" href="#">
+          <i data-lucide="house" class="nav-icon"></i>
+          Home
+        </a>
+        <a class="nav-link" data-page="activity" href="#">
+          <i data-lucide="activity" class="nav-icon"></i>
+          Activity
+        </a>
+        <a class="nav-link" data-page="sessions" href="#">
+          <i data-lucide="dumbbell" class="nav-icon"></i>
+          Workout Sessions
+        </a>
+        <a class="nav-link nav-soon" data-page="meals" href="#">
+          <i data-lucide="utensils" class="nav-icon"></i>
+          Meals
+          <span class="soon-badge">Soon</span>
+        </a>
+      </nav>
+
       <div class="header-date" id="headerDate"></div>
     </div>
   </header>
 
-  <div class="container page">
+  <div class="container page" id="page-home">
 
     <!-- KPI Section: Ring chart + 3 cards -->
     <section class="kpi-section card">
@@ -171,6 +193,89 @@
       <div id="historyList"></div>
     </section>
 
+  </div><!-- /page home -->
+
+  <!-- ══ PAGE: ACTIVITY ══ -->
+  <div class="container page" id="page-activity" style="display:none;">
+    <div class="page-hero card">
+      <div class="page-hero-icon kpi-blue">
+        <i data-lucide="activity" style="width:24px;height:24px;color:#0284c7;stroke:#0284c7;"></i>
+      </div>
+      <h2 class="page-hero-title">Activity Overview</h2>
+      <p class="page-hero-desc">Your weekly and monthly training stats at a glance.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card card">
+        <div class="stat-label">Longest streak</div>
+        <div class="stat-value" id="actStreak">— days</div>
+      </div>
+      <div class="stat-card card">
+        <div class="stat-label">Avg. workout duration</div>
+        <div class="stat-value" id="actAvgDuration">— min</div>
+      </div>
+      <div class="stat-card card">
+        <div class="stat-label">Total exercises logged</div>
+        <div class="stat-value" id="actTotalEx">0</div>
+      </div>
+      <div class="stat-card card">
+        <div class="stat-label">Total volume lifted</div>
+        <div class="stat-value" id="actVolume">0 kg</div>
+      </div>
+    </div>
+
+    <div class="card coming-section">
+      <i data-lucide="bar-chart-2" style="width:28px;height:28px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+      <p class="coming-title">Progress charts</p>
+      <p class="coming-desc">Strength progression, volume trends and personal records — coming in the next update.</p>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: WORKOUT SESSIONS ══ -->
+  <div class="container page" id="page-sessions" style="display:none;">
+    <div class="section-heading">
+      <h2 class="section-title">All Workout Sessions</h2>
+      <button class="btn-start-workout" id="startBtn2">
+        <i data-lucide="play" style="width:14px;height:14px;"></i>
+        Start New Workout
+      </button>
+    </div>
+    <div id="sessionsList"></div>
+  </div>
+
+  <!-- ══ PAGE: MEALS ══ -->
+  <div class="container page" id="page-meals" style="display:none;">
+    <div class="page-hero card">
+      <div class="page-hero-icon kpi-orange">
+        <i data-lucide="utensils" style="width:24px;height:24px;color:#ea580c;stroke:#ea580c;"></i>
+      </div>
+      <h2 class="page-hero-title">Meals & Nutrition</h2>
+      <p class="page-hero-desc">Track your daily calories, macros and meal journal.</p>
+    </div>
+
+    <div class="card coming-section">
+      <i data-lucide="salad" style="width:32px;height:32px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+      <p class="coming-title">Coming Soon</p>
+      <p class="coming-desc">Calorie counter, macro tracking and a daily food diary are on the way. Stay tuned!</p>
+      <div class="coming-features">
+        <div class="coming-feature">
+          <i data-lucide="check-circle" style="width:15px;height:15px;color:#16a34a;stroke:#16a34a;"></i>
+          Daily calorie goal
+        </div>
+        <div class="coming-feature">
+          <i data-lucide="check-circle" style="width:15px;height:15px;color:#16a34a;stroke:#16a34a;"></i>
+          Macro breakdown (protein, carbs, fat)
+        </div>
+        <div class="coming-feature">
+          <i data-lucide="check-circle" style="width:15px;height:15px;color:#16a34a;stroke:#16a34a;"></i>
+          Meal diary with search
+        </div>
+        <div class="coming-feature">
+          <i data-lucide="check-circle" style="width:15px;height:15px;color:#16a34a;stroke:#16a34a;"></i>
+          Nutrition + workout correlation
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Floating Timer -->

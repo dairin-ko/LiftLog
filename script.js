@@ -1,4 +1,36 @@
 // ─────────────────────────────────────────
+//  Navigation
+// ─────────────────────────────────────────
+const PAGES = {
+  home:     document.getElementById('page-home'),
+  activity: document.getElementById('page-activity'),
+  sessions: document.getElementById('page-sessions'),
+  meals:    document.getElementById('page-meals'),
+};
+
+function navigateTo(page) {
+  // Hide all pages
+  Object.values(PAGES).forEach(el => { if (el) el.style.display = 'none'; });
+  // Show target
+  if (PAGES[page]) PAGES[page].style.display = 'flex';
+  // Update nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.dataset.page === page);
+  });
+  // Re-render page-specific data
+  if (page === 'activity')  renderActivity();
+  if (page === 'sessions')  renderSessionsPage();
+  lucide.createIcons();
+}
+
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    navigateTo(link.dataset.page);
+  });
+});
+
+// ─────────────────────────────────────────
 //  Data
 // ─────────────────────────────────────────
 let sessions     = JSON.parse(localStorage.getItem('ll_sessions'))     || [];
@@ -300,6 +332,94 @@ function clearForm() {
   ['exercise','sets','reps','weight','notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('feeling').value = 'good';
 }
+
+// ─────────────────────────────────────────
+//  Activity page
+// ─────────────────────────────────────────
+function renderActivity() {
+  const allEx  = sessions.flatMap(s => s.exercises);
+
+  // Total exercises
+  document.getElementById('actTotalEx').textContent = allEx.length;
+
+  // Total volume
+  const vol = allEx.reduce((a, e) =>
+    a + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0), 0);
+  document.getElementById('actVolume').textContent = vol >= 1000
+    ? (vol / 1000).toFixed(1) + ' t' : vol + ' kg';
+
+  // Avg duration
+  const withDur = sessions.filter(s => s.duration);
+  const avgMin  = withDur.length
+    ? Math.round(withDur.reduce((a, s) => a + s.duration, 0) / withDur.length / 60)
+    : 0;
+  document.getElementById('actAvgDuration').textContent = avgMin ? `${avgMin} min` : '— min';
+
+  // Streak (consecutive days)
+  const days = [...new Set(sessions.map(s => s.date))].sort();
+  let streak = days.length ? 1 : 0, max = streak;
+  for (let i = 1; i < days.length; i++) {
+    const diff = (new Date(days[i]) - new Date(days[i-1])) / 86400000;
+    streak = diff === 1 ? streak + 1 : 1;
+    if (streak > max) max = streak;
+  }
+  document.getElementById('actStreak').textContent = max ? `${max} day${max !== 1 ? 's' : ''}` : '—';
+}
+
+// ─────────────────────────────────────────
+//  Workout Sessions page
+// ─────────────────────────────────────────
+function renderSessionsPage() {
+  const container = document.getElementById('sessionsList');
+  const feelings  = { great: '😄', good: '🙂', ok: '😐', bad: '😔' };
+
+  if (!sessions.length) {
+    container.innerHTML = `
+      <div class="empty-history">
+        <div class="empty-history-icon">📋</div>
+        <div class="empty-history-text">No sessions yet.<br>Start your first workout!</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = sessions.map(s => {
+    const dur    = s.duration ? formatDuration(s.duration) : '';
+    const exCount = s.exercises.length;
+    return `
+      <div class="history-card">
+        <div class="history-card-header">
+          <div>
+            <div class="history-date">${s.date}</div>
+            <div class="history-meta">${exCount} exercise${exCount !== 1 ? 's' : ''}${dur ? ` · ${dur}` : ''}</div>
+          </div>
+          <button class="btn-delete" onclick="removeSession(${s.id}); renderSessionsPage();">
+            <i data-lucide="x" style="width:13px;height:13px;"></i>
+          </button>
+        </div>
+        ${s.exercises.map(e => `
+          <div class="history-exercise">
+            <div>
+              <div class="history-exercise-name">${e.exercise}</div>
+              <div class="badges">
+                ${e.sets   ? `<span class="badge">${ICONS.repeat} ${e.sets} sets</span>` : ''}
+                ${e.reps   ? `<span class="badge">${ICONS.x} ${e.reps} reps</span>`      : ''}
+                ${e.weight ? `<span class="badge">${ICONS.weight} ${e.weight} kg</span>` : ''}
+              </div>
+            </div>
+            <span>${feelings[e.feeling] || ''}</span>
+          </div>
+        `).join('')}
+      </div>`;
+  }).join('');
+
+  lucide.createIcons();
+}
+
+// Start workout from Sessions page
+document.getElementById('startBtn2').addEventListener('click', () => {
+  navigateTo('home');
+  startWorkout();
+});
 
 // ─────────────────────────────────────────
 //  Rest Timer
