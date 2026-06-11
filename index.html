@@ -350,6 +350,28 @@
     </div>
   </div>
 
+  <!-- ══ SESSION DETAILS MODAL ══ -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="detailsTitle">Workout details</h2>
+          <p class="modal-subtitle" id="detailsSubtitle">Session summary</p>
+        </div>
+        <button class="modal-close" id="detailsModalClose" aria-label="Close details">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;stroke:currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="detailsBody">
+        <div class="details-summary" id="detailsSummary"></div>
+        <div class="details-exercises" id="detailsExercises"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost-modal" id="detailsModalCancel">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -591,9 +591,64 @@ function editSession(id) {
 function viewSessionDetails(id) {
   const s = sessions.find(s => s.id === id);
   if (!s) return;
-  navigateTo('sessions');
+  openDetailsModal(s);
 }
 
+function openDetailsModal(session) {
+  const modal     = document.getElementById('detailsModal');
+  const titleEl   = document.getElementById('detailsTitle');
+  const subtitle  = document.getElementById('detailsSubtitle');
+  const summaryEl = document.getElementById('detailsSummary');
+  const exercises = document.getElementById('detailsExercises');
+
+  titleEl.textContent = session.name || workoutTitle(session);
+  subtitle.textContent = `${session.date} · ${session.duration ? formatDuration(session.duration) : 'No duration'} `;
+
+  const exCount = session.exercises.length;
+  summaryEl.innerHTML = `
+    <div class="modal-field">
+      <div class="label">Exercises</div>
+      <div class="history-card-name">${exCount} exercise${exCount !== 1 ? 's' : ''}</div>
+    </div>
+    <div class="modal-field" style="margin-top:12px;">
+      <div class="label">Duration</div>
+      <div class="history-card-name">${session.duration ? formatDuration(session.duration) : 'Unknown'}</div>
+    </div>
+  `;
+
+  exercises.innerHTML = session.exercises.length
+    ? session.exercises.map(e => `
+      <div class="details-exercise">
+        <div class="details-exercise-main">
+          <div class="details-exercise-name">${e.exercise}</div>
+          <div class="details-exercise-meta">
+            ${e.sets   ? `<span class="badge">${ICONS.repeat} ${e.sets} sets</span>` : ''}
+            ${e.reps   ? `<span class="badge">${ICONS.x} ${e.reps} reps</span>` : ''}
+            ${e.weight ? `<span class="badge">${ICONS.weight} ${e.weight} kg</span>` : ''}
+          </div>
+        </div>
+        ${e.notes ? `<div class="details-exercise-notes">${e.notes}</div>` : ''}
+      </div>
+    `).join('')
+    : '<div style="color:#71717a;">No exercises logged yet.</div>';
+
+  modal.classList.add('open');
+}
+
+function closeDetailsModal() {
+  document.getElementById('detailsModal').classList.remove('open');
+}
+
+const detailsCloseBtn = document.getElementById('detailsModalClose');
+const detailsCancelBtn = document.getElementById('detailsModalCancel');
+const detailsOverlay = document.getElementById('detailsModal');
+if (detailsCloseBtn) detailsCloseBtn.addEventListener('click', closeDetailsModal);
+if (detailsCancelBtn) detailsCancelBtn.addEventListener('click', closeDetailsModal);
+if (detailsOverlay) {
+  detailsOverlay.addEventListener('click', e => {
+    if (e.target === detailsOverlay) closeDetailsModal();
+  });
+}
 
 function formatDuration(sec) {
   const h = Math.floor(sec / 3600);

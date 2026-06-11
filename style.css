@@ -1130,6 +1130,49 @@ select.input {
   border-top: 1px solid #f4f4f5;
 }
 
+.details-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.details-exercise {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.details-exercise-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.details-exercise-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.details-exercise-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.details-exercise-notes {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: #52525b;
+  line-height: 1.4;
+}
+
 .btn-ghost-modal {
   height: 38px;
   padding: 0 16px;
