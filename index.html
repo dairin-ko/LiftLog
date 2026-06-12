@@ -196,172 +196,129 @@
       <div class="history-grid" id="historyList"></div>
     </section>
 
-    <!-- Bottom Dashboard: Meals + Goals -->
+    <!-- Bottom Dashboard: Calories · Health · Goals -->
     <section class="bottom-dashboard">
 
-      <!-- LEFT: Meals Widget -->
-      <div class="card meals-widget">
-        <div class="meals-widget-header">
-          <div class="meals-widget-title-row">
-            <div class="kpi-icon-wrap kpi-orange" style="width:32px;height:32px;border-radius:8px;">
-              <i data-lucide="utensils" style="width:15px;height:15px;color:#ea580c;stroke:#ea580c;"></i>
-            </div>
-            <span class="section-title">Meals</span>
-          </div>
-          <a class="nav-link nav-soon" href="#" style="font-size:0.72rem;padding:4px 8px;">
-            Full tracker <span class="soon-badge">Soon</span>
-          </a>
+      <!-- BLOCK 1: Calories Today -->
+      <div class="card cal-today-widget">
+        <div class="cal-today-header">
+          <span class="section-title">Calories</span>
+          <span class="cal-today-date">Today</span>
         </div>
 
-        <div class="meals-inner">
+        <!-- Segmented arc — r=130, cx=150, cy=158, 16 segs, filled 11/16 ≈ 67% = 1480/2200 -->
+        <svg class="cal-arc-svg" viewBox="0 0 300 162" xmlns="http://www.w3.org/2000/svg">
+          <!-- TRACK (grey) -->
+          <path d="M 20.0 157.3 A 130 130 0 0 1 22.0 139.1" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 22.1 131.6 A 130 130 0 0 1 26.5 114.5" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 28.9 107.7 A 130 130 0 0 1 36.8 91.0"  stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 40.7 84.6 A 130 130 0 0 1 51.6 70.0"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 56.5 64.7 A 130 130 0 0 1 70.0 52.6"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 76.0 48.1 A 130 130 0 0 1 91.6 38.9"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 97.8 35.9 A 130 130 0 0 1 115.3 29.7"  stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 122.3 28.0 A 130 130 0 0 1 140.4 25.4" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 147.7 25.0 A 130 130 0 0 1 165.8 26.0" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 173.2 27.1 A 130 130 0 0 1 190.8 31.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 197.6 34.0 A 130 130 0 0 1 214.0 41.8" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 220.4 45.7 A 130 130 0 0 1 235.0 56.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 240.3 61.5 A 130 130 0 0 1 252.4 75.0" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 256.9 81.0 A 130 130 0 0 1 266.1 96.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 269.2 103.2 A 130 130 0 0 1 275.3 120.3" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 277.0 127.3 A 130 130 0 0 1 279.6 145.4" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <!-- FILL (blue) — segs 0-10, darker left → lighter right -->
+          <path d="M 20.0 157.3 A 130 130 0 0 1 22.0 139.1" stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 22.1 131.6 A 130 130 0 0 1 26.5 114.5" stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 28.9 107.7 A 130 130 0 0 1 36.8 91.0"  stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 40.7 84.6 A 130 130 0 0 1 51.6 70.0"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 56.5 64.7 A 130 130 0 0 1 70.0 52.6"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 76.0 48.1 A 130 130 0 0 1 91.6 38.9"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 97.8 35.9 A 130 130 0 0 1 115.3 29.7"  stroke="#93c5fd" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 122.3 28.0 A 130 130 0 0 1 140.4 25.4" stroke="#93c5fd" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 147.7 25.0 A 130 130 0 0 1 165.8 26.0" stroke="#bfdbfe" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 173.2 27.1 A 130 130 0 0 1 190.8 31.6" stroke="#bfdbfe" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <path d="M 197.6 34.0 A 130 130 0 0 1 214.0 41.8" stroke="#dbeafe" stroke-width="11" stroke-linecap="round" fill="none"/>
+          <!-- Center label -->
+          <text x="150" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#71717a">🔥</text>
+          <text x="150" y="132" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="700" fill="#09090b">720</text>
+          <text x="150" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="500" fill="#71717a">Remaining</text>
+        </svg>
 
-          <!-- Left: Today's intake with arc chart -->
-          <div class="meals-today">
-            <div class="meals-log-label">Today</div>
-
-            <!-- Segmented arc chart -->
-            <div class="meals-arc-wrap">
-              <svg class="meals-arc-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                <!-- Generate 24 segments along a semicircle arc (r=88, center 100,110) -->
-                <!-- Track segments (grey) -->
-                <g id="arcTrack">
-                  <path d="M 20.5 103.1 A 88 88 0 0 1 24.3 82.0"   stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 26.3 62.5 A 88 88 0 0 1 33.5 43.9"    stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 39.8 27.2 A 88 88 0 0 1 50.7 13.5"    stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 64.0 3.0  A 88 88 0 0 1 79.5 -3.5"    stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 96.0 -6.5 A 88 88 0 0 1 112.0 -4.0"   stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 127.5 2.5 A 88 88 0 0 1 141.5 13.0"   stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 153.5 27.0 A 88 88 0 0 1 163.0 43.5"  stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 169.5 62.0 A 88 88 0 0 1 173.5 82.5"  stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 174.5 103.5 A 88 88 0 0 1 172.0 116.0" stroke="#f0f0f0" stroke-width="9" stroke-linecap="round" fill="none"/>
-                </g>
-                <!-- Filled segments (blue) — 6 of 9 = ~67% = 1480/2200 kcal -->
-                <g id="arcFill">
-                  <path d="M 20.5 103.1 A 88 88 0 0 1 24.3 82.0"   stroke="#60a5fa" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 26.3 62.5 A 88 88 0 0 1 33.5 43.9"    stroke="#60a5fa" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 39.8 27.2 A 88 88 0 0 1 50.7 13.5"    stroke="#60a5fa" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 64.0 3.0  A 88 88 0 0 1 79.5 -3.5"    stroke="#60a5fa" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 96.0 -6.5 A 88 88 0 0 1 112.0 -4.0"   stroke="#93c5fd" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <path d="M 127.5 2.5 A 88 88 0 0 1 141.5 13.0"   stroke="#93c5fd" stroke-width="9" stroke-linecap="round" fill="none"/>
-                </g>
-                <!-- Center text -->
-                <text x="100" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#09090b">1 480</text>
-                <text x="100" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="500" fill="#71717a">consumed</text>
-                <!-- Flame icon placeholder replaced by text -->
-                <text x="100" y="68" text-anchor="middle" font-size="14">🔥</text>
-              </svg>
-
-              <!-- Remaining label below arc -->
-              <div class="meals-arc-remaining">
-                <span class="meals-arc-rem-val">720</span>
-                <span class="meals-arc-rem-label">kcal remaining</span>
-              </div>
+        <!-- Macro row with dividers -->
+        <div class="cal-macro-row">
+          <div class="cal-macro-item">
+            <div class="cal-macro-icon" style="background:#fff3e0;">
+              <i data-lucide="beef" style="width:14px;height:14px;color:#c2690a;stroke:#c2690a;"></i>
             </div>
-
-            <!-- Macro cards row -->
-            <div class="meals-macro-cards">
-              <div class="meals-macro-card">
-                <div class="meals-macro-icon" style="background:#fee2e2;">
-                  <i data-lucide="beef" style="width:13px;height:13px;color:#ef4444;stroke:#ef4444;"></i>
-                </div>
-                <div class="meals-macro-info">
-                  <div class="meals-macro-name">Protein</div>
-                  <div class="meals-macro-val">112 <span class="meals-macro-unit">/ 150g</span></div>
-                </div>
-                <div class="meals-macro-bar-wrap">
-                  <div class="meals-macro-bar" style="width:75%;background:#ef4444;"></div>
-                </div>
-              </div>
-              <div class="meals-macro-card">
-                <div class="meals-macro-icon" style="background:#fef3c7;">
-                  <i data-lucide="droplets" style="width:13px;height:13px;color:#f59e0b;stroke:#f59e0b;"></i>
-                </div>
-                <div class="meals-macro-info">
-                  <div class="meals-macro-name">Fat</div>
-                  <div class="meals-macro-val">38 <span class="meals-macro-unit">/ 70g</span></div>
-                </div>
-                <div class="meals-macro-bar-wrap">
-                  <div class="meals-macro-bar" style="width:54%;background:#f59e0b;"></div>
-                </div>
-              </div>
-              <div class="meals-macro-card">
-                <div class="meals-macro-icon" style="background:#dbeafe;">
-                  <i data-lucide="wheat" style="width:13px;height:13px;color:#3b82f6;stroke:#3b82f6;"></i>
-                </div>
-                <div class="meals-macro-info">
-                  <div class="meals-macro-name">Carbs</div>
-                  <div class="meals-macro-val">168 <span class="meals-macro-unit">/ 220g</span></div>
-                </div>
-                <div class="meals-macro-bar-wrap">
-                  <div class="meals-macro-bar" style="width:76%;background:#3b82f6;"></div>
-                </div>
-              </div>
+            <div class="cal-macro-text">
+              <div class="cal-macro-name">Protein</div>
+              <div class="cal-macro-val">112<span class="cal-macro-norm">/150g</span></div>
             </div>
           </div>
-
-          <!-- Divider -->
-          <div class="meals-divider"></div>
-
-          <!-- Right: Daily norms -->
-          <div class="meals-norms">
-            <div class="meals-log-label">Daily norm</div>
-
-            <div class="meals-norm-kcal-block">
-              <div class="meals-norm-kcal-icon">
-                <i data-lucide="flame" style="width:16px;height:16px;color:#ea580c;stroke:#ea580c;"></i>
-              </div>
-              <div>
-                <div class="meals-norm-kcal-val">2 200 <span style="font-size:0.72rem;font-weight:500;color:#71717a;">kcal / day</span></div>
-                <div class="meals-norm-kcal-sub">Maintenance · Moderately active</div>
-              </div>
+          <div class="cal-macro-divider"></div>
+          <div class="cal-macro-item">
+            <div class="cal-macro-icon" style="background:#e8f0fe;">
+              <i data-lucide="wheat" style="width:14px;height:14px;color:#1a56db;stroke:#1a56db;"></i>
             </div>
-
-            <div class="meals-norm-divider"></div>
-
-            <div class="macro-norm-list">
-              <div class="macro-norm-row">
-                <div class="macro-norm-dot" style="background:#ef4444;"></div>
-                <span class="macro-norm-name">Protein</span>
-                <div class="macro-norm-bar-wrap">
-                  <div class="macro-norm-bar" style="width:68%;background:#ef4444;"></div>
-                </div>
-                <span class="macro-norm-val">150<span class="macro-norm-unit">g</span></span>
-              </div>
-              <div class="macro-norm-row">
-                <div class="macro-norm-dot" style="background:#f59e0b;"></div>
-                <span class="macro-norm-name">Fat</span>
-                <div class="macro-norm-bar-wrap">
-                  <div class="macro-norm-bar" style="width:32%;background:#f59e0b;"></div>
-                </div>
-                <span class="macro-norm-val">70<span class="macro-norm-unit">g</span></span>
-              </div>
-              <div class="macro-norm-row">
-                <div class="macro-norm-dot" style="background:#3b82f6;"></div>
-                <span class="macro-norm-name">Carbs</span>
-                <div class="macro-norm-bar-wrap">
-                  <div class="macro-norm-bar" style="width:100%;background:#3b82f6;"></div>
-                </div>
-                <span class="macro-norm-val">220<span class="macro-norm-unit">g</span></span>
-              </div>
+            <div class="cal-macro-text">
+              <div class="cal-macro-name">Carbs</div>
+              <div class="cal-macro-val">168<span class="cal-macro-norm">/220g</span></div>
             </div>
-
-            <div class="meals-norm-split">
-              <div class="meals-norm-split-item">
-                <div class="meals-norm-split-bar" style="--pct:27%;--clr:#ef4444;"></div>
-                <span class="meals-norm-split-label">27% Protein</span>
-              </div>
-              <div class="meals-norm-split-item">
-                <div class="meals-norm-split-bar" style="--pct:29%;--clr:#f59e0b;"></div>
-                <span class="meals-norm-split-label">29% Fat</span>
-              </div>
-              <div class="meals-norm-split-item">
-                <div class="meals-norm-split-bar" style="--pct:40%;--clr:#3b82f6;"></div>
-                <span class="meals-norm-split-label">40% Carbs</span>
-              </div>
+          </div>
+          <div class="cal-macro-divider"></div>
+          <div class="cal-macro-item">
+            <div class="cal-macro-icon" style="background:#e6f4ea;">
+              <i data-lucide="droplets" style="width:14px;height:14px;color:#1e7e34;stroke:#1e7e34;"></i>
             </div>
-
+            <div class="cal-macro-text">
+              <div class="cal-macro-name">Fat</div>
+              <div class="cal-macro-val">38<span class="cal-macro-norm">/70g</span></div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- BLOCK 2: Daily Stats Cards (pastel) -->
+      <div class="daily-stat-cards">
+
+        <div class="dsc-card" style="background:#fefce8;">
+          <div class="dsc-icon-wrap" style="background:#fef08a;">
+            <i data-lucide="flame" style="width:18px;height:18px;color:#a16207;stroke:#a16207;"></i>
+          </div>
+          <div class="dsc-body">
+            <div class="dsc-label" style="color:#a16207;">Kcal Burned</div>
+            <div class="dsc-value" style="color:#78350f;">1 008 <span class="dsc-goal">· 46% Goal</span></div>
+          </div>
+          <div class="dsc-mini-bar-wrap" style="background:#fef08a;">
+            <div class="dsc-mini-bar" style="width:46%;background:#ca8a04;"></div>
+          </div>
+        </div>
+
+        <div class="dsc-card" style="background:#f5f3ff;">
+          <div class="dsc-icon-wrap" style="background:#ede9fe;">
+            <i data-lucide="moon" style="width:18px;height:18px;color:#6d28d9;stroke:#6d28d9;"></i>
+          </div>
+          <div class="dsc-body">
+            <div class="dsc-label" style="color:#6d28d9;">Sleep</div>
+            <div class="dsc-value" style="color:#4c1d95;">7h 20m <span class="dsc-goal">· 91% Goal</span></div>
+          </div>
+          <div class="dsc-mini-bar-wrap" style="background:#ede9fe;">
+            <div class="dsc-mini-bar" style="width:91%;background:#7c3aed;"></div>
+          </div>
+        </div>
+
+        <div class="dsc-card" style="background:#f0fdf4;">
+          <div class="dsc-icon-wrap" style="background:#dcfce7;">
+            <i data-lucide="footprints" style="width:18px;height:18px;color:#15803d;stroke:#15803d;"></i>
+          </div>
+          <div class="dsc-body">
+            <div class="dsc-label" style="color:#15803d;">Walk Steps</div>
+            <div class="dsc-value" style="color:#14532d;">6 240 <span class="dsc-goal">· 62% Goal</span></div>
+          </div>
+          <div class="dsc-mini-bar-wrap" style="background:#dcfce7;">
+            <div class="dsc-mini-bar" style="width:62%;background:#16a34a;"></div>
+          </div>
+        </div>
+
       </div>
 
       <!-- RIGHT: Goals Widget -->
