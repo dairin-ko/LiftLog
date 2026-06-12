@@ -196,6 +196,237 @@
       <div class="history-grid" id="historyList"></div>
     </section>
 
+    <!-- Bottom Dashboard: Meals + Goals -->
+    <section class="bottom-dashboard">
+
+      <!-- LEFT: Meals Widget -->
+      <div class="card meals-widget">
+        <div class="meals-widget-header">
+          <div class="meals-widget-title-row">
+            <div class="kpi-icon-wrap kpi-orange" style="width:32px;height:32px;border-radius:8px;">
+              <i data-lucide="utensils" style="width:15px;height:15px;color:#ea580c;stroke:#ea580c;"></i>
+            </div>
+            <span class="section-title">Meals</span>
+          </div>
+          <a class="nav-link nav-soon" href="#" style="font-size:0.72rem;padding:4px 8px;">
+            Full tracker <span class="soon-badge">Soon</span>
+          </a>
+        </div>
+
+        <div class="meals-inner">
+          <!-- Left: meal history cards -->
+          <div class="meals-log">
+            <div class="meals-log-label">Recent days</div>
+
+            <div class="meal-day-card">
+              <div class="meal-day-top">
+                <span class="meal-day-name">Today</span>
+                <span class="meal-day-kcal">1 480 kcal</span>
+              </div>
+              <div class="meal-day-macros">
+                <span class="macro-chip macro-p">P 112g</span>
+                <span class="macro-chip macro-c">C 168g</span>
+                <span class="macro-chip macro-f">F 38g</span>
+              </div>
+              <div class="meal-day-bar-wrap">
+                <div class="meal-day-bar" style="width:67%"></div>
+              </div>
+            </div>
+
+            <div class="meal-day-card">
+              <div class="meal-day-top">
+                <span class="meal-day-name">Yesterday</span>
+                <span class="meal-day-kcal">2 210 kcal</span>
+              </div>
+              <div class="meal-day-macros">
+                <span class="macro-chip macro-p">P 158g</span>
+                <span class="macro-chip macro-c">C 248g</span>
+                <span class="macro-chip macro-f">F 62g</span>
+              </div>
+              <div class="meal-day-bar-wrap">
+                <div class="meal-day-bar" style="width:100%;background:#16a34a;"></div>
+              </div>
+            </div>
+
+            <div class="meal-day-card">
+              <div class="meal-day-top">
+                <span class="meal-day-name">Jun 10</span>
+                <span class="meal-day-kcal">1 840 kcal</span>
+              </div>
+              <div class="meal-day-macros">
+                <span class="macro-chip macro-p">P 134g</span>
+                <span class="macro-chip macro-c">C 200g</span>
+                <span class="macro-chip macro-f">F 52g</span>
+              </div>
+              <div class="meal-day-bar-wrap">
+                <div class="meal-day-bar" style="width:84%"></div>
+              </div>
+            </div>
+
+            <div class="meal-day-card">
+              <div class="meal-day-top">
+                <span class="meal-day-name">Jun 9</span>
+                <span class="meal-day-kcal">1 620 kcal</span>
+              </div>
+              <div class="meal-day-macros">
+                <span class="macro-chip macro-p">P 98g</span>
+                <span class="macro-chip macro-c">C 190g</span>
+                <span class="macro-chip macro-f">F 44g</span>
+              </div>
+              <div class="meal-day-bar-wrap">
+                <div class="meal-day-bar" style="width:74%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="meals-divider"></div>
+
+          <!-- Right: nutrition norms -->
+          <div class="meals-stats">
+            <div class="meals-stats-label">Daily norm</div>
+
+            <div class="meals-kcal-ring">
+              <svg viewBox="0 0 80 80" class="meals-ring-svg">
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#f4f4f5" stroke-width="8"/>
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#3b82f6" stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-dasharray="134 201"
+                  transform="rotate(-90 40 40)"/>
+              </svg>
+              <div class="meals-ring-center">
+                <div class="meals-ring-val">2 200</div>
+                <div class="meals-ring-unit">kcal</div>
+              </div>
+            </div>
+
+            <div class="macro-norm-list">
+              <div class="macro-norm-row">
+                <div class="macro-norm-dot" style="background:#ef4444;"></div>
+                <span class="macro-norm-name">Protein</span>
+                <div class="macro-norm-bar-wrap">
+                  <div class="macro-norm-bar" style="width:75%;background:#ef4444;"></div>
+                </div>
+                <span class="macro-norm-val">150<span class="macro-norm-unit">g</span></span>
+              </div>
+              <div class="macro-norm-row">
+                <div class="macro-norm-dot" style="background:#f59e0b;"></div>
+                <span class="macro-norm-name">Fat</span>
+                <div class="macro-norm-bar-wrap">
+                  <div class="macro-norm-bar" style="width:54%;background:#f59e0b;"></div>
+                </div>
+                <span class="macro-norm-val">70<span class="macro-norm-unit">g</span></span>
+              </div>
+              <div class="macro-norm-row">
+                <div class="macro-norm-dot" style="background:#3b82f6;"></div>
+                <span class="macro-norm-name">Carbs</span>
+                <div class="macro-norm-bar-wrap">
+                  <div class="macro-norm-bar" style="width:100%;background:#3b82f6;"></div>
+                </div>
+                <span class="macro-norm-val">220<span class="macro-norm-unit">g</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Goals Widget -->
+      <div class="card goals-widget">
+        <div class="goals-widget-header">
+          <div class="meals-widget-title-row">
+            <div class="kpi-icon-wrap kpi-purple" style="width:32px;height:32px;border-radius:8px;">
+              <i data-lucide="target" style="width:15px;height:15px;color:#7c3aed;stroke:#7c3aed;"></i>
+            </div>
+            <span class="section-title">Goals</span>
+          </div>
+          <button class="btn-add-goal" title="Add goal">
+            <i data-lucide="plus" style="width:14px;height:14px;"></i>
+          </button>
+        </div>
+
+        <div class="goals-list">
+
+          <div class="goal-item">
+            <div class="goal-item-top">
+              <div class="goal-icon-wrap" style="background:#e0f2fe;">
+                <i data-lucide="activity" style="width:14px;height:14px;color:#0284c7;stroke:#0284c7;"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Run 5 km × 3 / week</div>
+                <div class="goal-sub">Cardio · Ongoing</div>
+              </div>
+              <span class="goal-badge goal-badge-active">Active</span>
+            </div>
+            <div class="goal-progress-row">
+              <div class="goal-progress-bar-wrap">
+                <div class="goal-progress-bar" style="width:66%;background:#38bdf8;"></div>
+              </div>
+              <span class="goal-progress-label">2 / 3</span>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-item-top">
+              <div class="goal-icon-wrap" style="background:#dcfce7;">
+                <i data-lucide="dumbbell" style="width:14px;height:14px;color:#16a34a;stroke:#16a34a;"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Bench Press 100 kg</div>
+                <div class="goal-sub">Strength · Max 1RM</div>
+              </div>
+              <span class="goal-badge goal-badge-active">Active</span>
+            </div>
+            <div class="goal-progress-row">
+              <div class="goal-progress-bar-wrap">
+                <div class="goal-progress-bar" style="width:75%;background:#4ade80;"></div>
+              </div>
+              <span class="goal-progress-label">75 kg / 100 kg</span>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-item-top">
+              <div class="goal-icon-wrap" style="background:#fef9c3;">
+                <i data-lucide="scale" style="width:14px;height:14px;color:#ca8a04;stroke:#ca8a04;"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Lose 3 kg by July</div>
+                <div class="goal-sub">Body · –3 kg from 82 kg</div>
+              </div>
+              <span class="goal-badge goal-badge-active">Active</span>
+            </div>
+            <div class="goal-progress-row">
+              <div class="goal-progress-bar-wrap">
+                <div class="goal-progress-bar" style="width:40%;background:#fbbf24;"></div>
+              </div>
+              <span class="goal-progress-label">–1.2 kg / –3 kg</span>
+            </div>
+          </div>
+
+          <div class="goal-item">
+            <div class="goal-item-top">
+              <div class="goal-icon-wrap" style="background:#ede9fe;">
+                <i data-lucide="calendar-check" style="width:14px;height:14px;color:#7c3aed;stroke:#7c3aed;"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">4 workouts / week</div>
+                <div class="goal-sub">Consistency · This week</div>
+              </div>
+              <span class="goal-badge goal-badge-done">Done</span>
+            </div>
+            <div class="goal-progress-row">
+              <div class="goal-progress-bar-wrap">
+                <div class="goal-progress-bar" style="width:100%;background:#a78bfa;"></div>
+              </div>
+              <span class="goal-progress-label">4 / 4</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
   </div><!-- /page home -->
 
   <!-- ══ PAGE: ACTIVITY ══ -->
