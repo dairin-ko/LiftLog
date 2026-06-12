@@ -1353,33 +1353,46 @@ select.input {
 
 .btn-primary-modal:not(:disabled):hover { background: #27272a; }
 
-/* ── Calories arc (inside home-activity-card) ── */
+/* ── Calories arc ── */
 .cal-arc-svg {
   width: 100%;
   display: block;
   overflow: visible;
 }
 
-.cal-macro-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 8px;
-  padding-top: 14px;
-  border-top: 1px solid #f4f4f5;
+/* 2×2 macro grid: [Calories | Protein] / [Fat | Carbs] */
+.cal-macro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  grid-template-rows: 1fr 1px 1fr;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 4px;
+  margin-top: 4px;
+  gap: 0;
 }
 
 .cal-macro-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
-  justify-content: center;
+  padding: 10px 6px;
+}
+
+.cal-macro-sep-v {
+  width: 1px;
+  background: #f0f0f0;
+  margin: 8px 0;
+}
+
+.cal-macro-sep-h {
+  height: 1px;
+  background: #f0f0f0;
+  grid-column: span 1;
 }
 
 .cal-macro-icon {
-  width: 30px; height: 30px;
-  border-radius: 9px;
+  width: 28px; height: 28px;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
@@ -1387,30 +1400,23 @@ select.input {
 .cal-macro-text { display: flex; flex-direction: column; gap: 1px; }
 
 .cal-macro-name {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: #71717a;
   font-weight: 500;
 }
 
 .cal-macro-val {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #09090b;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .cal-macro-norm {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 500;
   color: #a1a1aa;
   margin-left: 1px;
-}
-
-.cal-macro-divider {
-  width: 1px;
-  height: 32px;
-  background: #f0f0f0;
-  flex-shrink: 0;
 }
 
 /* ── Goals Widget ── */
