@@ -229,7 +229,7 @@ body {
 /* ── Home Bottom 3-col ── */
 .home-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 650fr 334fr 295fr;
   gap: 20px;
   align-items: start;
 }
