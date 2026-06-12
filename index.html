@@ -125,11 +125,7 @@
           Finish Workout
         </button>
       </div>
-
-      <!-- Exercises logged in this session -->
       <div id="activeExercises"></div>
-
-      <!-- Add exercise form -->
       <div class="add-exercise-row" id="toggleForm">
         <div class="add-exercise-trigger">
           <i data-lucide="plus-circle" style="width:16px;height:16px;color:#71717a;"></i>
@@ -137,7 +133,6 @@
         </div>
         <i data-lucide="chevron-down" class="toggle-chevron" id="toggleChevron" style="width:16px;height:16px;color:#a1a1aa;"></i>
       </div>
-
       <div class="form-body" id="formBody">
         <div class="form-divider"></div>
         <div class="form-field">
@@ -178,13 +173,19 @@
     </section>
 
     <!-- Workout History -->
-    <section>
-      <div class="section-heading">
-        <h2 class="section-title">Workout History</h2>
-        <button class="btn-start-workout" id="startBtn" style="display:none;" aria-label="Start New Workout">
-          <i data-lucide="play" style="width:14px;height:14px;"></i>
-          Start New Workout
-        </button>
+    <section class="home-section">
+      <div class="home-section-hdr">
+        <h2 class="home-section-title">Workout history</h2>
+        <div class="home-section-actions">
+          <button class="btn-add-workout" id="startBtn">
+            <i data-lucide="plus" style="width:14px;height:14px;"></i>
+            Add workout
+          </button>
+          <button class="btn-viewall" onclick="navigateTo('sessions')">
+            View all
+            <i data-lucide="arrow-right" style="width:13px;height:13px;"></i>
+          </button>
+        </div>
       </div>
       <div class="history-grid" id="historyList"></div>
     </section>
@@ -192,163 +193,191 @@
     <!-- Bottom 3-col: Activity · Calories · Goals -->
     <section class="home-bottom">
 
-      <!-- BLOCK 1: Activity chart -->
-      <div class="card home-activity-card">
-        <div class="home-card-hdr">
-          <span class="section-title">Activity</span>
-          <a href="#" class="view-all-link" onclick="navigateTo('activity');return false;">View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:middle;stroke:#71717a;"></i></a>
+      <!-- Activity -->
+      <div class="home-col">
+        <div class="home-col-hdr">
+          <span class="home-col-title">Activity</span>
+          <a href="#" class="home-viewall-link" onclick="navigateTo('activity');return false;">
+            View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:-1px;stroke:#71717a;"></i>
+          </a>
         </div>
-        <svg class="activity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Grid lines -->
-          <line x1="36" y1="16"  x2="490" y2="16"  stroke="#f4f4f5" stroke-width="1"/>
-          <line x1="36" y1="48"  x2="490" y2="48"  stroke="#f4f4f5" stroke-width="1"/>
-          <line x1="36" y1="80"  x2="490" y2="80"  stroke="#f4f4f5" stroke-width="1"/>
-          <line x1="36" y1="112" x2="490" y2="112" stroke="#f4f4f5" stroke-width="1"/>
-          <line x1="36" y1="144" x2="490" y2="144" stroke="#f4f4f5" stroke-width="1"/>
-          <line x1="36" y1="176" x2="490" y2="176" stroke="#f4f4f5" stroke-width="1"/>
-          <!-- Y-axis labels -->
-          <text x="30" y="20"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">10k</text>
-          <text x="30" y="52"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">8k</text>
-          <text x="30" y="84"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">6k</text>
-          <text x="30" y="116" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">4k</text>
-          <text x="30" y="148" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">2k</text>
-          <text x="30" y="180" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">0</text>
-          <!-- Step bars (light periwinkle) -->
-          <rect x="55"  y="142" width="26" height="34"  rx="5" fill="#bfdbfe"/>
-          <rect x="120" y="83"  width="26" height="93"  rx="5" fill="#bfdbfe"/>
-          <rect x="184" y="77"  width="26" height="99"  rx="5" fill="#93c5fd"/>
-          <rect x="249" y="40"  width="26" height="136" rx="5" fill="#93c5fd"/>
-          <rect x="314" y="112" width="26" height="64"  rx="5" fill="#bfdbfe"/>
-          <rect x="378" y="61"  width="26" height="115" rx="5" fill="#93c5fd"/>
-          <rect x="443" y="120" width="26" height="56"  rx="5" fill="#bfdbfe"/>
-          <!-- Workout line (smooth curve, dark blue) -->
-          <path d="M 68,96 C 84,100 101,125 133,112 C 165,99 165,43 197,45 C 229,47 230,127 262,120 C 295,113 295,77 327,72 C 359,67 359,89 391,99 C 423,109 440,109 456,112"
-            fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Workout line dots -->
-          <circle cx="68"  cy="96"  r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="133" cy="112" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="197" cy="45"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="262" cy="120" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="327" cy="72"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="391" cy="99"  r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
-          <circle cx="456" cy="112" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
-          <!-- X-axis labels -->
-          <text x="68"  y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 6</text>
-          <text x="133" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 7</text>
-          <text x="197" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 8</text>
-          <text x="262" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 9</text>
-          <text x="327" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 10</text>
-          <text x="391" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 11</text>
-          <text x="456" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3b82f6" font-weight="600">Jun 12</text>
-        </svg>
-        <!-- Legend -->
-        <div class="activity-legend">
-          <div class="activity-legend-item">
-            <div style="width:12px;height:12px;border-radius:3px;background:#bfdbfe;flex-shrink:0;"></div>
-            <span>Steps</span>
-          </div>
-          <div class="activity-legend-item">
-            <div style="width:18px;height:2.5px;background:#3b82f6;border-radius:2px;flex-shrink:0;"></div>
-            <span>Workouts</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- BLOCK 2: Calories arc -->
-      <div class="card home-activity-card">
-        <div class="home-card-hdr">
-          <span class="section-title">Calories</span>
-          <a href="#" class="view-all-link">View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:middle;stroke:#71717a;"></i></a>
-        </div>
-
-        <div class="cal-today-widget">
-        <div class="cal-today-header">
-          <span class="section-title">Calories</span>
-          <span class="cal-today-date">Today</span>
-        </div>
-
-        <!-- Segmented arc — r=130, cx=150, cy=158, 16 segs, filled 11/16 ≈ 67% = 1480/2200 -->
-        <svg class="cal-arc-svg" viewBox="0 0 300 162" xmlns="http://www.w3.org/2000/svg">
-          <!-- TRACK (grey) -->
-          <path d="M 20.0 157.3 A 130 130 0 0 1 22.0 139.1" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 22.1 131.6 A 130 130 0 0 1 26.5 114.5" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 28.9 107.7 A 130 130 0 0 1 36.8 91.0"  stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 40.7 84.6 A 130 130 0 0 1 51.6 70.0"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 56.5 64.7 A 130 130 0 0 1 70.0 52.6"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 76.0 48.1 A 130 130 0 0 1 91.6 38.9"   stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 97.8 35.9 A 130 130 0 0 1 115.3 29.7"  stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 122.3 28.0 A 130 130 0 0 1 140.4 25.4" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 147.7 25.0 A 130 130 0 0 1 165.8 26.0" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 173.2 27.1 A 130 130 0 0 1 190.8 31.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 197.6 34.0 A 130 130 0 0 1 214.0 41.8" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 220.4 45.7 A 130 130 0 0 1 235.0 56.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 240.3 61.5 A 130 130 0 0 1 252.4 75.0" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 256.9 81.0 A 130 130 0 0 1 266.1 96.6" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 269.2 103.2 A 130 130 0 0 1 275.3 120.3" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 277.0 127.3 A 130 130 0 0 1 279.6 145.4" stroke="#EBEBEB" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <!-- FILL (blue) — segs 0-10, darker left → lighter right -->
-          <path d="M 20.0 157.3 A 130 130 0 0 1 22.0 139.1" stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 22.1 131.6 A 130 130 0 0 1 26.5 114.5" stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 28.9 107.7 A 130 130 0 0 1 36.8 91.0"  stroke="#3b82f6" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 40.7 84.6 A 130 130 0 0 1 51.6 70.0"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 56.5 64.7 A 130 130 0 0 1 70.0 52.6"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 76.0 48.1 A 130 130 0 0 1 91.6 38.9"   stroke="#60a5fa" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 97.8 35.9 A 130 130 0 0 1 115.3 29.7"  stroke="#93c5fd" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 122.3 28.0 A 130 130 0 0 1 140.4 25.4" stroke="#93c5fd" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 147.7 25.0 A 130 130 0 0 1 165.8 26.0" stroke="#bfdbfe" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 173.2 27.1 A 130 130 0 0 1 190.8 31.6" stroke="#bfdbfe" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <path d="M 197.6 34.0 A 130 130 0 0 1 214.0 41.8" stroke="#dbeafe" stroke-width="11" stroke-linecap="round" fill="none"/>
-          <!-- Center label -->
-          <text x="150" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#71717a">🔥</text>
-          <text x="150" y="132" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="700" fill="#09090b">720</text>
-          <text x="150" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="500" fill="#71717a">Remaining</text>
-        </svg>
-
-        <!-- Macro row with dividers -->
-        <div class="cal-macro-row">
-          <div class="cal-macro-item">
-            <div class="cal-macro-icon" style="background:#fff3e0;">
-              <i data-lucide="beef" style="width:14px;height:14px;color:#c2690a;stroke:#c2690a;"></i>
+        <div class="card home-col-card">
+          <svg class="activity-svg" viewBox="0 0 500 205" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid lines -->
+            <line x1="36" y1="18"  x2="492" y2="18"  stroke="#f4f4f5" stroke-width="1"/>
+            <line x1="36" y1="50"  x2="492" y2="50"  stroke="#f4f4f5" stroke-width="1"/>
+            <line x1="36" y1="82"  x2="492" y2="82"  stroke="#f4f4f5" stroke-width="1"/>
+            <line x1="36" y1="114" x2="492" y2="114" stroke="#f4f4f5" stroke-width="1"/>
+            <line x1="36" y1="146" x2="492" y2="146" stroke="#f4f4f5" stroke-width="1"/>
+            <line x1="36" y1="178" x2="492" y2="178" stroke="#f0f0f0" stroke-width="1"/>
+            <!-- Y-axis labels -->
+            <text x="32" y="22"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">10k</text>
+            <text x="32" y="54"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">8k</text>
+            <text x="32" y="86"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">6k</text>
+            <text x="32" y="118" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">4k</text>
+            <text x="32" y="150" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">2k</text>
+            <text x="32" y="182" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">0</text>
+            <!-- Step bars: 14 bars (2/day × 7 days), bottom y=178 -->
+            <!-- May 2: 2.1k→37px, 1.8k→32px -->
+            <rect x="48"  y="141" width="18" height="37"  rx="4" fill="#bfdbfe"/>
+            <rect x="70"  y="146" width="18" height="32"  rx="4" fill="#bfdbfe"/>
+            <!-- May 3: 5.8k→103px, 4.2k→75px -->
+            <rect x="110" y="75"  width="18" height="103" rx="4" fill="#93c5fd"/>
+            <rect x="132" y="103" width="18" height="75"  rx="4" fill="#bfdbfe"/>
+            <!-- May 4: 6.2k→110px, 5.5k→98px -->
+            <rect x="172" y="68"  width="18" height="110" rx="4" fill="#93c5fd"/>
+            <rect x="194" y="80"  width="18" height="98"  rx="4" fill="#93c5fd"/>
+            <!-- May 5: 8.5k→151px, 7.2k→128px -->
+            <rect x="234" y="27"  width="18" height="151" rx="4" fill="#60a5fa"/>
+            <rect x="256" y="50"  width="18" height="128" rx="4" fill="#93c5fd"/>
+            <!-- May 6: 4.0k→71px, 3.6k→64px -->
+            <rect x="296" y="107" width="18" height="71"  rx="4" fill="#bfdbfe"/>
+            <rect x="318" y="114" width="18" height="64"  rx="4" fill="#bfdbfe"/>
+            <!-- May 7: 7.2k→128px, 6.1k→108px -->
+            <rect x="358" y="50"  width="18" height="128" rx="4" fill="#60a5fa"/>
+            <rect x="380" y="70"  width="18" height="108" rx="4" fill="#93c5fd"/>
+            <!-- May 8: 3.5k→62px, 2.8k→50px -->
+            <rect x="420" y="116" width="18" height="62"  rx="4" fill="#bfdbfe"/>
+            <rect x="442" y="128" width="18" height="50"  rx="4" fill="#bfdbfe"/>
+            <!-- Workout line (smooth, dark blue) -->
+            <path d="M 68,114 C 84,118 97,130 121,120
+                     C 145,110 145,52 183,54
+                     C 221,56 221,110 245,100
+                     C 269,90 269,60 307,58
+                     C 345,56 345,80 369,88
+                     C 393,96 420,105 431,110"
+              fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Dots on line at day centers -->
+            <circle cx="68"  cy="114" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="121" cy="120" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="183" cy="54"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="245" cy="100" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="307" cy="58"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="369" cy="88"  r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
+            <circle cx="431" cy="110" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
+            <!-- X-axis labels at day group centers -->
+            <text x="68"  y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 2</text>
+            <text x="121" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 3</text>
+            <text x="183" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 4</text>
+            <text x="245" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 5</text>
+            <text x="307" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 6</text>
+            <text x="369" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 7</text>
+            <text x="431" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3b82f6" font-weight="600">May 8</text>
+          </svg>
+          <div class="activity-legend">
+            <div class="activity-legend-item">
+              <div style="width:12px;height:12px;border-radius:3px;background:#93c5fd;flex-shrink:0;"></div>
+              <span>Steps</span>
             </div>
-            <div class="cal-macro-text">
-              <div class="cal-macro-name">Protein</div>
-              <div class="cal-macro-val">112<span class="cal-macro-norm">/150g</span></div>
-            </div>
-          </div>
-          <div class="cal-macro-divider"></div>
-          <div class="cal-macro-item">
-            <div class="cal-macro-icon" style="background:#e8f0fe;">
-              <i data-lucide="wheat" style="width:14px;height:14px;color:#1a56db;stroke:#1a56db;"></i>
-            </div>
-            <div class="cal-macro-text">
-              <div class="cal-macro-name">Carbs</div>
-              <div class="cal-macro-val">168<span class="cal-macro-norm">/220g</span></div>
-            </div>
-          </div>
-          <div class="cal-macro-divider"></div>
-          <div class="cal-macro-item">
-            <div class="cal-macro-icon" style="background:#e6f4ea;">
-              <i data-lucide="droplets" style="width:14px;height:14px;color:#1e7e34;stroke:#1e7e34;"></i>
-            </div>
-            <div class="cal-macro-text">
-              <div class="cal-macro-name">Fat</div>
-              <div class="cal-macro-val">38<span class="cal-macro-norm">/70g</span></div>
+            <div class="activity-legend-item">
+              <div style="width:18px;height:2.5px;background:#3b82f6;border-radius:2px;flex-shrink:0;"></div>
+              <span>Workouts</span>
             </div>
           </div>
         </div>
-      </div><!-- /cal-today-widget -->
-      </div><!-- /Calories card -->
+      </div><!-- /Activity -->
 
-      <!-- BLOCK 3: Goals column -->
-      <div class="home-goals-col">
-        <div class="home-card-hdr">
-          <span class="section-title">Goals</span>
+      <!-- Calories -->
+      <div class="home-col">
+        <div class="home-col-hdr">
+          <span class="home-col-title">Calories</span>
+          <a href="#" class="home-viewall-link">
+            View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:-1px;stroke:#71717a;"></i>
+          </a>
+        </div>
+        <div class="card home-col-card">
+          <svg class="cal-arc-svg" viewBox="0 0 300 165" xmlns="http://www.w3.org/2000/svg">
+            <!-- TRACK (all 24 segments, grey) -->
+            <path d="M 30.0,165.0 A 120,120 0 0,0 30.8,151.4" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 31.0,149.3 A 120,120 0 0,0 33.6,136.0" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 34.1,133.9 A 120,120 0 0,0 38.2,121.3" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 39.1,119.1 A 120,120 0 0,0 45.1,106.8" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 46.1,105.0 A 120,120 0 0,0 53.5,93.6"  stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 54.8,91.9  A 120,120 0 0,0 63.7,81.6"  stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 65.1,80.1  A 120,120 0 0,0 74.8,71.5"  stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 76.9,69.8  A 120,120 0 0,0 88.2,62.1"  stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 90.0,61.1  A 120,120 0 0,0 101.8,55.1" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 104.1,54.1 A 120,120 0 0,0 116.9,49.6" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 118.9,49.1 A 120,120 0 0,0 132.2,46.3" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 134.3,46.0 A 120,120 0 0,0 147.9,45.0" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 150.0,45.0 A 120,120 0 0,0 163.6,45.8" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 165.7,46.0 A 120,120 0 0,0 179.0,48.6" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 181.1,49.1 A 120,120 0 0,0 194.0,53.4" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 195.9,54.1 A 120,120 0 0,0 208.2,60.1" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 210.0,61.1 A 120,120 0 0,0 221.4,68.5" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 223.1,69.8 A 120,120 0 0,0 233.4,78.7" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 234.9,80.1 A 120,120 0 0,0 243.9,90.3" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 245.2,91.9 A 120,120 0 0,0 252.9,103.2" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 253.9,105.0 A 120,120 0 0,0 260.0,117.1" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 260.9,119.1 A 120,120 0 0,0 265.4,131.9" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 265.9,133.9 A 120,120 0 0,0 268.7,147.3" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 269.0,149.3 A 120,120 0 0,0 270.0,162.9" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <!-- FILL (segments 0-15 = ~66% consumed, gradient dark→light) -->
+            <path d="M 30.0,165.0 A 120,120 0 0,0 30.8,151.4" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 31.0,149.3 A 120,120 0 0,0 33.6,136.0" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 34.1,133.9 A 120,120 0 0,0 38.2,121.3" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 39.1,119.1 A 120,120 0 0,0 45.1,106.8" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 46.1,105.0 A 120,120 0 0,0 53.5,93.6"  stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 54.8,91.9  A 120,120 0 0,0 63.7,81.6"  stroke="#60a5fa" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 65.1,80.1  A 120,120 0 0,0 74.8,71.5"  stroke="#60a5fa" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 76.9,69.8  A 120,120 0 0,0 88.2,62.1"  stroke="#60a5fa" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 90.0,61.1  A 120,120 0 0,0 101.8,55.1" stroke="#93c5fd" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 104.1,54.1 A 120,120 0 0,0 116.9,49.6" stroke="#93c5fd" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 118.9,49.1 A 120,120 0 0,0 132.2,46.3" stroke="#93c5fd" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 134.3,46.0 A 120,120 0 0,0 147.9,45.0" stroke="#bfdbfe" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 150.0,45.0 A 120,120 0 0,0 163.6,45.8" stroke="#bfdbfe" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 165.7,46.0 A 120,120 0 0,0 179.0,48.6" stroke="#bfdbfe" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 181.1,49.1 A 120,120 0 0,0 194.0,53.4" stroke="#dbeafe" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M 195.9,54.1 A 120,120 0 0,0 208.2,60.1" stroke="#dbeafe" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <!-- Center label -->
+            <text x="150" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" fill="#09090b">🔥</text>
+            <text x="150" y="138" text-anchor="middle" font-family="Inter,sans-serif" font-size="28" font-weight="700" fill="#09090b">750</text>
+            <text x="150" y="155" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#71717a">Remaining</text>
+          </svg>
+          <!-- Macro row -->
+          <div class="cal-macro-row">
+            <div class="cal-macro-item">
+              <div class="cal-macro-icon" style="background:#fff3e0;">
+                <i data-lucide="beef" style="width:14px;height:14px;color:#c2690a;stroke:#c2690a;"></i>
+              </div>
+              <div class="cal-macro-text">
+                <div class="cal-macro-name">Protein</div>
+                <div class="cal-macro-val">40<span class="cal-macro-norm">/77g</span></div>
+              </div>
+            </div>
+            <div class="cal-macro-divider"></div>
+            <div class="cal-macro-item">
+              <div class="cal-macro-icon" style="background:#e8f0fe;">
+                <i data-lucide="wheat" style="width:14px;height:14px;color:#1a56db;stroke:#1a56db;"></i>
+              </div>
+              <div class="cal-macro-text">
+                <div class="cal-macro-name">Carbs</div>
+                <div class="cal-macro-val">40<span class="cal-macro-norm">/77g</span></div>
+              </div>
+            </div>
+            <div class="cal-macro-divider"></div>
+            <div class="cal-macro-item">
+              <div class="cal-macro-icon" style="background:#e6f4ea;">
+                <i data-lucide="droplets" style="width:14px;height:14px;color:#1e7e34;stroke:#1e7e34;"></i>
+              </div>
+              <div class="cal-macro-text">
+                <div class="cal-macro-name">Fat</div>
+                <div class="cal-macro-val">40<span class="cal-macro-norm">/77g</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /Calories -->
+
+      <!-- Goals -->
+      <div class="home-col">
+        <div class="home-col-hdr">
+          <span class="home-col-title">Goals</span>
           <button class="btn-add-goal">
             <i data-lucide="plus" style="width:13px;height:13px;"></i>
             Add goal
           </button>
         </div>
-
         <div class="goals-list">
 
           <div class="goal-item-card">
@@ -428,7 +457,7 @@
           </div>
 
         </div>
-      </div><!-- /goals col -->
+      </div><!-- /Goals -->
 
     </section><!-- /home-bottom -->
 
