@@ -254,16 +254,24 @@ body {
 }
 
 .home-viewall-link {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #71717a;
+  height: 30px;
+  padding: 0 11px;
+  background: #ffffff;
+  color: #3f3f46;
+  border: 1.5px solid #e4e4e7;
+  border-radius: 7px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  font-family: inherit;
   text-decoration: none;
-  display: flex;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
-  gap: 3px;
-  transition: color 0.15s;
+  gap: 4px;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
 }
-.home-viewall-link:hover { color: #09090b; }
+.home-viewall-link:hover { border-color: #a1a1aa; color: #09090b; }
 
 .home-col-card {
   padding: 18px 18px 14px;
@@ -299,15 +307,15 @@ body {
 .goals-list { display: flex; flex-direction: column; gap: 8px; }
 
 .btn-add-goal {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   height: 30px;
-  padding: 0 10px;
-  background: #f4f4f5;
-  border: 1px solid #e4e4e7;
+  padding: 0 11px;
+  background: #ffffff;
+  border: 1.5px solid #e4e4e7;
   border-radius: 7px;
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 600;
   font-family: inherit;
   color: #3f3f46;
@@ -315,7 +323,7 @@ body {
   transition: background 0.15s, border-color 0.15s;
 }
 
-.btn-add-goal:hover { background: #e4e4e7; border-color: #a1a1aa; }
+.btn-add-goal:hover { border-color: #a1a1aa; color: #09090b; }
 
 /* Individual goal cards — white */
 .goals-list { display: flex; flex-direction: column; gap: 8px; }
