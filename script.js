@@ -343,31 +343,25 @@ function renderKPI() {
   const weekSessions = sessions.filter(s => s.startTime >= weekAgo);
   const allExercises = sessions.flatMap(s => s.exercises);
 
-  // Workouts this week
-  const weekCount = weekSessions.length;
-  document.getElementById('kpiWeek').textContent = weekCount;
+  // Workouts this week (hidden legacy element)
+  document.getElementById('kpiWeek').textContent = weekSessions.length;
 
-  // Time trained (total minutes from session durations)
-  const totalSec  = sessions.reduce((a, s) => a + (s.duration || 0), 0);
-  const totalMin  = Math.round(totalSec / 60);
-  document.getElementById('kpiTime').textContent = totalMin >= 60
-    ? `${Math.floor(totalMin/60)}h ${totalMin%60}m`
-    : `${totalMin} min`;
+  // Time trained — shown in stat pill
+  const totalSec = sessions.reduce((a, s) => a + (s.duration || 0), 0);
+  const totalMin = Math.round(totalSec / 60);
+  const timeEl = document.getElementById('kpiTime');
+  if (timeEl) {
+    const formatted = totalMin >= 60
+      ? `${Math.floor(totalMin/60)}h ${totalMin%60}m`
+      : `${totalMin} min`;
+    timeEl.innerHTML = formatted + ' <span class="stat-pill-sub">this week</span>';
+  }
 
-  // Kcal estimate: sets × reps × weight × 0.15 (rough MET-based)
-  const kcal = Math.round(allExercises.reduce((acc, e) => {
-    return acc + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0) * 0.15;
-  }, 0));
-  document.getElementById('kpiKcal').textContent = kcal.toLocaleString();
-
-  // Ring center
-  document.getElementById('ringCenterValue').textContent = sessions.length;
-
-  // Segmented ring — 2 segments: workouts/week + time trained
-  renderSegmentedRing(weekCount, 5, totalMin, 300);
-
-  // Bar chart — weekly kcal
-  renderBarChart();
+  // Kcal burned — shown in stat pill
+  const kcal = Math.round(allExercises.reduce((acc, e) =>
+    acc + (parseInt(e.sets)||0) * (parseInt(e.reps)||0) * (parseFloat(e.weight)||0) * 0.15, 0));
+  const kcalEl = document.getElementById('kpiKcal');
+  if (kcalEl) kcalEl.textContent = kcal.toLocaleString();
 }
 
 // ─────────────────────────────────────────

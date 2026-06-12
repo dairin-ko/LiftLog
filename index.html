@@ -47,74 +47,67 @@
 
   <div class="container page" id="page-home">
 
-    <!-- KPI Dashboard -->
-    <section class="kpi-dashboard">
+    <!-- Hidden legacy elements (JS still updates these) -->
+    <div style="display:none">
+      <span id="kpiWeek">0</span>
+      <span id="ringCenterValue">0</span>
+      <circle id="segWeek"/>
+      <circle id="segTime"/>
+      <div id="barChart"></div>
+      <div id="barLabels"></div>
+      <span id="barAvg"></span>
+    </div>
 
-      <!-- Col 1: KPI cards stacked -->
-      <div class="kpi-cards-col">
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap kpi-green">
-            <i data-lucide="flame" class="kpi-svg"></i>
-          </div>
-          <div class="kpi-text">
-            <div class="kpi-label">Kcal burned</div>
-            <div class="kpi-value" id="kpiKcal">0</div>
-          </div>
+    <!-- Stat Pills Row -->
+    <section class="stat-pills">
+      <div class="stat-pill card">
+        <div class="stat-pill-icon" style="background:#ede9fe;">
+          <i data-lucide="timer" style="width:20px;height:20px;color:#7c3aed;stroke:#7c3aed;"></i>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap kpi-blue">
-            <i data-lucide="calendar-days" class="kpi-svg"></i>
-          </div>
-          <div class="kpi-text">
-            <div class="kpi-label">Workouts / week</div>
-            <div class="kpi-value" id="kpiWeek">0</div>
-          </div>
+        <div class="stat-pill-body">
+          <div class="stat-pill-label">Time trained</div>
+          <div class="stat-pill-val" id="kpiTime">0 min <span class="stat-pill-sub">this week</span></div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap kpi-purple">
-            <i data-lucide="timer" class="kpi-svg"></i>
-          </div>
-          <div class="kpi-text">
-            <div class="kpi-label">Time trained</div>
-            <div class="kpi-value" id="kpiTime">0 min</div>
-          </div>
-        </div>
+        <button class="stat-pill-arrow">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+        </button>
       </div>
-
-      <!-- Col 2: Concentric rings -->
-      <div class="ring-container card">
-        <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-          <!-- Outer ring track — Workouts last week -->
-          <circle class="ring-track" cx="110" cy="110" r="90"/>
-          <!-- Outer ring — Workouts last week (blue) -->
-          <circle class="ring-seg" id="segWeek" cx="110" cy="110" r="90"
-            stroke="#38bdf8" stroke-dasharray="0 565"/>
-          <!-- Inner ring track — Time trained -->
-          <circle class="ring-track" cx="110" cy="110" r="62"/>
-          <!-- Inner ring — Time trained (green) -->
-          <circle class="ring-seg" id="segTime" cx="110" cy="110" r="62"
-            stroke="#4ade80" stroke-dasharray="0 389"/>
-        </svg>
-        <div class="ring-center">
-          <i data-lucide="dumbbell" class="ring-icon-sm"></i>
-          <div class="ring-main-val" id="ringCenterValue">0</div>
-          <div class="ring-main-label">workouts</div>
+      <div class="stat-pill card">
+        <div class="stat-pill-icon" style="background:#fff3e0;">
+          <i data-lucide="footprints" style="width:20px;height:20px;color:#ea580c;stroke:#ea580c;"></i>
         </div>
-      </div>
-
-      <!-- Col 3: Weekly bar chart -->
-      <div class="bar-chart-card card">
-        <div class="bar-chart-header">
-          <span class="bar-chart-title">Weekly Kcal</span>
-          <div class="bar-chart-avg">
-            <span class="avg-label">Weekly avg</span>
-            <span class="avg-value" id="barAvg">0 kcal</span>
-          </div>
+        <div class="stat-pill-body">
+          <div class="stat-pill-label">Steps walk</div>
+          <div class="stat-pill-val">5,463</div>
         </div>
-        <div class="bar-chart" id="barChart"></div>
-        <div class="bar-labels" id="barLabels"></div>
+        <button class="stat-pill-arrow">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+        </button>
       </div>
-
+      <div class="stat-pill card">
+        <div class="stat-pill-icon" style="background:#e0f2fe;">
+          <i data-lucide="flame" style="width:20px;height:20px;color:#0284c7;stroke:#0284c7;"></i>
+        </div>
+        <div class="stat-pill-body">
+          <div class="stat-pill-label">Calories</div>
+          <div class="stat-pill-val"><span id="kpiKcal">0</span> <span class="stat-pill-sub">kcal</span></div>
+        </div>
+        <button class="stat-pill-arrow">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+        </button>
+      </div>
+      <div class="stat-pill card">
+        <div class="stat-pill-icon" style="background:#e0e7ff;">
+          <i data-lucide="moon" style="width:20px;height:20px;color:#4338ca;stroke:#4338ca;"></i>
+        </div>
+        <div class="stat-pill-body">
+          <div class="stat-pill-label">Sleep</div>
+          <div class="stat-pill-val">7h <span style="font-size:0.9em;">53m</span></div>
+        </div>
+        <button class="stat-pill-arrow">
+          <i data-lucide="arrow-right" style="width:14px;height:14px;color:#a1a1aa;stroke:#a1a1aa;"></i>
+        </button>
+      </div>
     </section>
 
     <!-- Workout In Progress (hidden by default) -->
@@ -196,11 +189,79 @@
       <div class="history-grid" id="historyList"></div>
     </section>
 
-    <!-- Bottom Dashboard: Calories · Health · Goals -->
-    <section class="bottom-dashboard">
+    <!-- Bottom 3-col: Activity · Calories · Goals -->
+    <section class="home-bottom">
 
-      <!-- BLOCK 1: Calories Today -->
-      <div class="card cal-today-widget">
+      <!-- BLOCK 1: Activity chart -->
+      <div class="card home-activity-card">
+        <div class="home-card-hdr">
+          <span class="section-title">Activity</span>
+          <a href="#" class="view-all-link" onclick="navigateTo('activity');return false;">View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:middle;stroke:#71717a;"></i></a>
+        </div>
+        <svg class="activity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid lines -->
+          <line x1="36" y1="16"  x2="490" y2="16"  stroke="#f4f4f5" stroke-width="1"/>
+          <line x1="36" y1="48"  x2="490" y2="48"  stroke="#f4f4f5" stroke-width="1"/>
+          <line x1="36" y1="80"  x2="490" y2="80"  stroke="#f4f4f5" stroke-width="1"/>
+          <line x1="36" y1="112" x2="490" y2="112" stroke="#f4f4f5" stroke-width="1"/>
+          <line x1="36" y1="144" x2="490" y2="144" stroke="#f4f4f5" stroke-width="1"/>
+          <line x1="36" y1="176" x2="490" y2="176" stroke="#f4f4f5" stroke-width="1"/>
+          <!-- Y-axis labels -->
+          <text x="30" y="20"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">10k</text>
+          <text x="30" y="52"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">8k</text>
+          <text x="30" y="84"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">6k</text>
+          <text x="30" y="116" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">4k</text>
+          <text x="30" y="148" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">2k</text>
+          <text x="30" y="180" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">0</text>
+          <!-- Step bars (light periwinkle) -->
+          <rect x="55"  y="142" width="26" height="34"  rx="5" fill="#bfdbfe"/>
+          <rect x="120" y="83"  width="26" height="93"  rx="5" fill="#bfdbfe"/>
+          <rect x="184" y="77"  width="26" height="99"  rx="5" fill="#93c5fd"/>
+          <rect x="249" y="40"  width="26" height="136" rx="5" fill="#93c5fd"/>
+          <rect x="314" y="112" width="26" height="64"  rx="5" fill="#bfdbfe"/>
+          <rect x="378" y="61"  width="26" height="115" rx="5" fill="#93c5fd"/>
+          <rect x="443" y="120" width="26" height="56"  rx="5" fill="#bfdbfe"/>
+          <!-- Workout line (smooth curve, dark blue) -->
+          <path d="M 68,96 C 84,100 101,125 133,112 C 165,99 165,43 197,45 C 229,47 230,127 262,120 C 295,113 295,77 327,72 C 359,67 359,89 391,99 C 423,109 440,109 456,112"
+            fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Workout line dots -->
+          <circle cx="68"  cy="96"  r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="133" cy="112" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="197" cy="45"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="262" cy="120" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="327" cy="72"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="391" cy="99"  r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+          <circle cx="456" cy="112" r="3.5" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+          <!-- X-axis labels -->
+          <text x="68"  y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 6</text>
+          <text x="133" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 7</text>
+          <text x="197" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 8</text>
+          <text x="262" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 9</text>
+          <text x="327" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 10</text>
+          <text x="391" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun 11</text>
+          <text x="456" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3b82f6" font-weight="600">Jun 12</text>
+        </svg>
+        <!-- Legend -->
+        <div class="activity-legend">
+          <div class="activity-legend-item">
+            <div style="width:12px;height:12px;border-radius:3px;background:#bfdbfe;flex-shrink:0;"></div>
+            <span>Steps</span>
+          </div>
+          <div class="activity-legend-item">
+            <div style="width:18px;height:2.5px;background:#3b82f6;border-radius:2px;flex-shrink:0;"></div>
+            <span>Workouts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOCK 2: Calories arc -->
+      <div class="card home-activity-card">
+        <div class="home-card-hdr">
+          <span class="section-title">Calories</span>
+          <a href="#" class="view-all-link">View all <i data-lucide="arrow-right" style="width:12px;height:12px;vertical-align:middle;stroke:#71717a;"></i></a>
+        </div>
+
+        <div class="cal-today-widget">
         <div class="cal-today-header">
           <span class="section-title">Calories</span>
           <span class="cal-today-date">Today</span>
@@ -275,69 +336,22 @@
             </div>
           </div>
         </div>
-      </div>
+      </div><!-- /cal-today-widget -->
+      </div><!-- /Calories card -->
 
-      <!-- BLOCK 2: Daily Stats Cards (pastel) -->
-      <div class="daily-stat-cards">
-
-        <div class="dsc-card" style="background:#fefce8;">
-          <div class="dsc-icon-wrap" style="background:#fef08a;">
-            <i data-lucide="flame" style="width:18px;height:18px;color:#a16207;stroke:#a16207;"></i>
-          </div>
-          <div class="dsc-body">
-            <div class="dsc-label" style="color:#a16207;">Kcal Burned</div>
-            <div class="dsc-value" style="color:#78350f;">1 008 <span class="dsc-goal">· 46% Goal</span></div>
-          </div>
-          <div class="dsc-mini-bar-wrap" style="background:#fef08a;">
-            <div class="dsc-mini-bar" style="width:46%;background:#ca8a04;"></div>
-          </div>
-        </div>
-
-        <div class="dsc-card" style="background:#f5f3ff;">
-          <div class="dsc-icon-wrap" style="background:#ede9fe;">
-            <i data-lucide="moon" style="width:18px;height:18px;color:#6d28d9;stroke:#6d28d9;"></i>
-          </div>
-          <div class="dsc-body">
-            <div class="dsc-label" style="color:#6d28d9;">Sleep</div>
-            <div class="dsc-value" style="color:#4c1d95;">7h 20m <span class="dsc-goal">· 91% Goal</span></div>
-          </div>
-          <div class="dsc-mini-bar-wrap" style="background:#ede9fe;">
-            <div class="dsc-mini-bar" style="width:91%;background:#7c3aed;"></div>
-          </div>
-        </div>
-
-        <div class="dsc-card" style="background:#f0fdf4;">
-          <div class="dsc-icon-wrap" style="background:#dcfce7;">
-            <i data-lucide="footprints" style="width:18px;height:18px;color:#15803d;stroke:#15803d;"></i>
-          </div>
-          <div class="dsc-body">
-            <div class="dsc-label" style="color:#15803d;">Walk Steps</div>
-            <div class="dsc-value" style="color:#14532d;">6 240 <span class="dsc-goal">· 62% Goal</span></div>
-          </div>
-          <div class="dsc-mini-bar-wrap" style="background:#dcfce7;">
-            <div class="dsc-mini-bar" style="width:62%;background:#16a34a;"></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT: Goals Widget -->
-      <div class="card goals-widget">
-        <div class="goals-widget-header">
-          <div class="meals-widget-title-row">
-            <div class="kpi-icon-wrap kpi-purple" style="width:32px;height:32px;border-radius:8px;">
-              <i data-lucide="target" style="width:15px;height:15px;color:#7c3aed;stroke:#7c3aed;"></i>
-            </div>
-            <span class="section-title">Goals</span>
-          </div>
-          <button class="btn-add-goal" title="Add goal">
-            <i data-lucide="plus" style="width:14px;height:14px;"></i>
+      <!-- BLOCK 3: Goals column -->
+      <div class="home-goals-col">
+        <div class="home-card-hdr">
+          <span class="section-title">Goals</span>
+          <button class="btn-add-goal">
+            <i data-lucide="plus" style="width:13px;height:13px;"></i>
+            Add goal
           </button>
         </div>
 
         <div class="goals-list">
 
-          <div class="goal-item">
+          <div class="goal-item-card">
             <div class="goal-item-top">
               <div class="goal-icon-wrap" style="background:#e0f2fe;">
                 <i data-lucide="activity" style="width:14px;height:14px;color:#0284c7;stroke:#0284c7;"></i>
@@ -356,7 +370,7 @@
             </div>
           </div>
 
-          <div class="goal-item">
+          <div class="goal-item-card">
             <div class="goal-item-top">
               <div class="goal-icon-wrap" style="background:#dcfce7;">
                 <i data-lucide="dumbbell" style="width:14px;height:14px;color:#16a34a;stroke:#16a34a;"></i>
@@ -375,7 +389,7 @@
             </div>
           </div>
 
-          <div class="goal-item">
+          <div class="goal-item-card">
             <div class="goal-item-top">
               <div class="goal-icon-wrap" style="background:#fef9c3;">
                 <i data-lucide="scale" style="width:14px;height:14px;color:#ca8a04;stroke:#ca8a04;"></i>
@@ -394,7 +408,7 @@
             </div>
           </div>
 
-          <div class="goal-item">
+          <div class="goal-item-card">
             <div class="goal-item-top">
               <div class="goal-icon-wrap" style="background:#ede9fe;">
                 <i data-lucide="calendar-check" style="width:14px;height:14px;color:#7c3aed;stroke:#7c3aed;"></i>
@@ -403,7 +417,7 @@
                 <div class="goal-name">4 workouts / week</div>
                 <div class="goal-sub">Consistency · This week</div>
               </div>
-              <span class="goal-badge goal-badge-done">Done</span>
+              <span class="goal-badge goal-badge-done">Done ✓</span>
             </div>
             <div class="goal-progress-row">
               <div class="goal-progress-bar-wrap">
@@ -414,9 +428,9 @@
           </div>
 
         </div>
-      </div>
+      </div><!-- /goals col -->
 
-    </section>
+    </section><!-- /home-bottom -->
 
   </div><!-- /page home -->
 
