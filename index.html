@@ -204,65 +204,68 @@
         <div class="card home-col-card">
           <svg class="activity-svg" viewBox="0 0 500 205" xmlns="http://www.w3.org/2000/svg">
             <!-- Grid lines -->
-            <line x1="36" y1="18"  x2="492" y2="18"  stroke="#f4f4f5" stroke-width="1"/>
-            <line x1="36" y1="50"  x2="492" y2="50"  stroke="#f4f4f5" stroke-width="1"/>
-            <line x1="36" y1="82"  x2="492" y2="82"  stroke="#f4f4f5" stroke-width="1"/>
-            <line x1="36" y1="114" x2="492" y2="114" stroke="#f4f4f5" stroke-width="1"/>
-            <line x1="36" y1="146" x2="492" y2="146" stroke="#f4f4f5" stroke-width="1"/>
-            <line x1="36" y1="178" x2="492" y2="178" stroke="#f0f0f0" stroke-width="1"/>
+            <line x1="36" y1="18"  x2="492" y2="18"  stroke="#f0f2f5" stroke-width="1"/>
+            <line x1="36" y1="50"  x2="492" y2="50"  stroke="#f0f2f5" stroke-width="1"/>
+            <line x1="36" y1="82"  x2="492" y2="82"  stroke="#f0f2f5" stroke-width="1"/>
+            <line x1="36" y1="114" x2="492" y2="114" stroke="#f0f2f5" stroke-width="1"/>
+            <line x1="36" y1="146" x2="492" y2="146" stroke="#f0f2f5" stroke-width="1"/>
+            <line x1="36" y1="178" x2="492" y2="178" stroke="#f0f2f5" stroke-width="1"/>
             <!-- Y-axis labels -->
-            <text x="32" y="22"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">10k</text>
-            <text x="32" y="54"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">8k</text>
-            <text x="32" y="86"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">6k</text>
-            <text x="32" y="118" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">4k</text>
-            <text x="32" y="150" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">2k</text>
-            <text x="32" y="182" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">0</text>
-            <!-- Step bars: 14 bars (2/day × 7 days), bottom y=178 -->
-            <!-- May 2: 2.1k→37px, 1.8k→32px -->
-            <rect x="48"  y="141" width="18" height="37"  rx="4" fill="#bfdbfe"/>
-            <rect x="70"  y="146" width="18" height="32"  rx="4" fill="#bfdbfe"/>
-            <!-- May 3: 5.8k→103px, 4.2k→75px -->
-            <rect x="110" y="75"  width="18" height="103" rx="4" fill="#93c5fd"/>
-            <rect x="132" y="103" width="18" height="75"  rx="4" fill="#bfdbfe"/>
-            <!-- May 4: 6.2k→110px, 5.5k→98px -->
-            <rect x="172" y="68"  width="18" height="110" rx="4" fill="#93c5fd"/>
-            <rect x="194" y="80"  width="18" height="98"  rx="4" fill="#93c5fd"/>
-            <!-- May 5: 8.5k→151px, 7.2k→128px -->
-            <rect x="234" y="27"  width="18" height="151" rx="4" fill="#60a5fa"/>
-            <rect x="256" y="50"  width="18" height="128" rx="4" fill="#93c5fd"/>
-            <!-- May 6: 4.0k→71px, 3.6k→64px -->
-            <rect x="296" y="107" width="18" height="71"  rx="4" fill="#bfdbfe"/>
-            <rect x="318" y="114" width="18" height="64"  rx="4" fill="#bfdbfe"/>
-            <!-- May 7: 7.2k→128px, 6.1k→108px -->
-            <rect x="358" y="50"  width="18" height="128" rx="4" fill="#60a5fa"/>
-            <rect x="380" y="70"  width="18" height="108" rx="4" fill="#93c5fd"/>
-            <!-- May 8: 3.5k→62px, 2.8k→50px -->
-            <rect x="420" y="116" width="18" height="62"  rx="4" fill="#bfdbfe"/>
-            <rect x="442" y="128" width="18" height="50"  rx="4" fill="#bfdbfe"/>
-            <!-- Workout line (smooth, dark blue) -->
-            <path d="M 68,114 C 84,118 97,130 121,120
-                     C 145,110 145,52 183,54
-                     C 221,56 221,110 245,100
-                     C 269,90 269,60 307,58
-                     C 345,56 345,80 369,88
-                     C 393,96 420,105 431,110"
-              fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Dots on line at day centers -->
-            <circle cx="68"  cy="114" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="121" cy="120" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="183" cy="54"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="245" cy="100" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="307" cy="58"  r="3.5" fill="#3b82f6" stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="369" cy="88"  r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
-            <circle cx="431" cy="110" r="3.5" fill="#fff"    stroke="#3b82f6" stroke-width="2"/>
-            <!-- X-axis labels at day group centers -->
-            <text x="68"  y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 2</text>
-            <text x="121" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 3</text>
-            <text x="183" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 4</text>
-            <text x="245" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 5</text>
-            <text x="307" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 6</text>
-            <text x="369" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May 7</text>
-            <text x="431" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3b82f6" font-weight="600">May 8</text>
+            <text x="32" y="22"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">10k</text>
+            <text x="32" y="54"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">8k</text>
+            <text x="32" y="86"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">6k</text>
+            <text x="32" y="118" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">4k</text>
+            <text x="32" y="150" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">2k</text>
+            <text x="32" y="182" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">0</text>
+            <!-- Step bars: 21 bars (3/day × 7 days), bottom y=178, bar w=12, gap=4, group-gap=20 -->
+            <!-- Group spacing: groups start at x=44, each group width=64 (3×12 + 2×4 + 20) -->
+            <!-- May 2: 2.2k, 0.9k, 1.8k → h=35,14,29 -->
+            <rect x="44"  y="143" width="12" height="35" rx="3" fill="#c8d9f2"/>
+            <rect x="60"  y="164" width="12" height="14" rx="3" fill="#c8d9f2"/>
+            <rect x="76"  y="149" width="12" height="29" rx="3" fill="#c8d9f2"/>
+            <!-- May 3: 1.8k, 0.9k, 2.2k → h=29,14,35 -->
+            <rect x="108" y="149" width="12" height="29" rx="3" fill="#c8d9f2"/>
+            <rect x="124" y="164" width="12" height="14" rx="3" fill="#c8d9f2"/>
+            <rect x="140" y="143" width="12" height="35" rx="3" fill="#c8d9f2"/>
+            <!-- May 4: 2.0k, 0.6k, 2.0k → h=32,10,32 -->
+            <rect x="172" y="146" width="12" height="32" rx="3" fill="#c8d9f2"/>
+            <rect x="188" y="168" width="12" height="10" rx="3" fill="#c8d9f2"/>
+            <rect x="204" y="146" width="12" height="32" rx="3" fill="#c8d9f2"/>
+            <!-- May 5: 9.5k, 8.1k, 6.3k → h=152,130,101 -->
+            <rect x="236" y="26"  width="12" height="152" rx="3" fill="#93bbea"/>
+            <rect x="252" y="48"  width="12" height="130" rx="3" fill="#abc8f0"/>
+            <rect x="268" y="77"  width="12" height="101" rx="3" fill="#abc8f0"/>
+            <!-- May 6: 4.5k, 4.0k, 4.3k → h=72,64,69 -->
+            <rect x="300" y="106" width="12" height="72" rx="3" fill="#c8d9f2"/>
+            <rect x="316" y="114" width="12" height="64" rx="3" fill="#c8d9f2"/>
+            <rect x="332" y="109" width="12" height="69" rx="3" fill="#c8d9f2"/>
+            <!-- May 7: 3.2k, 2.2k, 3.8k → h=51,35,61 -->
+            <rect x="364" y="127" width="12" height="51" rx="3" fill="#93bbea"/>
+            <rect x="380" y="143" width="12" height="35" rx="3" fill="#c8d9f2"/>
+            <rect x="396" y="117" width="12" height="61" rx="3" fill="#93bbea"/>
+            <!-- May 8: 4.8k, 4.4k, 2.8k → h=77,70,45 -->
+            <rect x="428" y="101" width="12" height="77" rx="3" fill="#c8d9f2"/>
+            <rect x="444" y="108" width="12" height="70" rx="3" fill="#c8d9f2"/>
+            <rect x="460" y="133" width="12" height="45" rx="3" fill="#c8d9f2"/>
+            <!-- Workout line: thin, smooth, no dots -->
+            <path d="M 40,92
+                     C 55,82 65,78 88,84
+                     C 108,89 118,102 140,104
+                     C 162,106 168,112 192,110
+                     C 218,108 228,42 252,46
+                     C 270,50 278,86 300,88
+                     C 322,90 336,82 364,86
+                     C 388,90 402,64 430,62
+                     C 452,60 468,82 492,88"
+              fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- X-axis labels at group centers (44+32=76 per group) -->
+            <text x="76"  y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 2</text>
+            <text x="140" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 3</text>
+            <text x="204" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 4</text>
+            <text x="268" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 5</text>
+            <text x="332" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 6</text>
+            <text x="396" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#b0b8c4">May 7</text>
+            <text x="460" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3b82f6" font-weight="600">May 8</text>
           </svg>
           <div class="activity-legend">
             <div class="activity-legend-item">
